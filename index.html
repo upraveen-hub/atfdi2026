@@ -26,7 +26,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fk-navy);color:#fff;min-h
   background:repeating-linear-gradient(90deg,transparent 0 78px,rgba(255,225,27,.022) 78px 80px)}
 canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 
-/* overlays */
 .overlay{position:fixed;inset:0;z-index:95;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0}
 #runOverlay{background:radial-gradient(ellipse at center,rgba(11,44,111,.72),rgba(6,21,55,.88))}
 .run-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(100px,23vw,230px);line-height:.82;color:var(--fk-yellow);letter-spacing:5px;
@@ -47,8 +46,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 
 .app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 16px 16px}
 .screen{display:none}.screen.on{display:block}
-
-/* header */
 .hdr{text-align:center;padding:2px 0 2px}
 .hdr-kicker{display:inline-flex;align-items:center;gap:8px;font-size:9px;letter-spacing:4px;text-transform:uppercase;
   color:var(--fk-navy);background:linear-gradient(135deg,var(--fk-yellow),var(--fk-gold));border-radius:20px;padding:5px 16px;margin-bottom:6px;font-weight:700}
@@ -65,7 +62,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
   filter:drop-shadow(0 2px 8px rgba(255,225,27,.3))}
 .ipl-word{font-size:10px;color:#fff;opacity:.88;margin-top:2px;line-height:1.2;font-weight:500}
 
-/* COMPACT GAME HEADER */
 .game-hdr{display:flex;align-items:center;gap:8px;
   background:linear-gradient(135deg,rgba(40,116,240,.22),rgba(6,21,55,.9));
   border:1px solid rgba(255,225,27,.22);border-radius:11px;padding:7px 10px;margin-bottom:8px}
@@ -81,7 +77,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .ball-dot.used-run{background:var(--fk-yellow);border-color:var(--fk-yellow);box-shadow:0 0 6px rgba(255,225,27,.5)}
 .ball-dot.used-out{background:#FF4444;border-color:#FF6666}
 
-/* LOGIN SCREEN */
 .login-card{max-width:480px;margin:6px auto 16px;background:linear-gradient(150deg,rgba(40,116,240,.22),rgba(6,21,55,.94));
   border:1.5px solid rgba(255,225,27,.32);border-radius:14px;padding:12px 18px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
 .login-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;text-align:center;color:var(--fk-yellow);line-height:1;margin-bottom:3px}
@@ -111,7 +106,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 @keyframes scorePop{0%{transform:scale(1)}30%{transform:scale(1.6);filter:brightness(1.6)}100%{transform:scale(1)}}
 .score-pop{animation:scorePop .7s ease}
 
-/* wickets */
 .pitch-strip{display:flex;align-items:flex-end;justify-content:center;gap:15px;
   background:linear-gradient(135deg,rgba(11,44,111,.6),rgba(6,21,55,.85));
   border:1px solid rgba(40,116,240,.35);border-radius:12px;padding:15px 10px 9px;margin-bottom:22px;position:relative;overflow:hidden}
@@ -127,7 +121,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .stump.fallen .bail{opacity:0;transform:translateY(-12px) rotate(28deg)}
 .wlabel{font-size:9px;color:rgba(255,255,255,.2)}
 
-/* book */
 .book-zone{display:flex;flex-direction:column;align-items:center;margin-bottom:22px}
 .book{width:100%;max-width:660px;perspective:2000px;margin-bottom:22px}
 .book-inner{position:relative;background:linear-gradient(155deg,#1B4FA8,#0B2C6F 45%,#061A42);border-radius:12px;padding:15px;
@@ -184,7 +177,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 @keyframes bookOpen{0%{transform:rotateY(-90deg) scale(.92);opacity:0}55%{transform:rotateY(10deg) scale(1.015);opacity:1}82%{transform:rotateY(-3deg) scale(1)}100%{transform:rotateY(0) scale(1);opacity:1}}
 .spread.opening{animation:bookOpen .85s cubic-bezier(.3,.7,.4,1) forwards;transform-origin:left center}
 
-/* rich flip */
 .flip-stage{display:none;position:relative;min-height:340px;border-radius:6px;overflow:hidden;perspective:1900px;
   background:linear-gradient(175deg,var(--paper),var(--paper2))}
 .flip-stage.on{display:block}
@@ -227,7 +219,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
   font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:7px;color:rgba(40,116,240,.3);animation:statusBlink 1s ease-in-out infinite}
 @keyframes statusBlink{0%,100%{opacity:.45}50%{opacity:.95}}
 
-/* duck */
 .duck-page{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;min-height:255px;z-index:2;position:relative}
 .duck-zero{font-family:'Bebas Neue',sans-serif;font-size:158px;line-height:.78;color:rgba(224,43,43,.13);margin-bottom:-24px}
 .duck-mark{font-family:'Bebas Neue',sans-serif;font-size:92px;line-height:.85;color:var(--red);letter-spacing:6px;text-shadow:0 3px 0 rgba(224,43,43,.2)}
@@ -236,7 +227,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .duck-rule{margin-top:16px;padding:10px 13px;border-radius:8px;background:rgba(224,43,43,.1);border-left:3px solid var(--red);
   font-family:'DM Sans',sans-serif;font-size:11.5px;line-height:1.5;color:#7A1414;text-align:left;max-width:320px}
 
-/* ball */
 .spin-zone{display:flex;flex-direction:column;align-items:center;gap:10px}
 .ball-btn{width:110px;height:110px;border-radius:50%;border:none;cursor:pointer;z-index:2;padding:0;
   background:none;display:flex;align-items:center;justify-content:center;position:relative;
@@ -258,7 +248,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .ball-btn.spinning{animation:ballSpin .85s cubic-bezier(.36,.07,.19,.97) forwards;pointer-events:none}
 .spin-hint{font-size:12px;color:var(--muted);text-align:center}
 
-/* results */
 .gameover{display:none;background:linear-gradient(155deg,rgba(40,116,240,.22),rgba(6,21,55,.97));
   border:1.5px solid rgba(255,225,27,.35);border-radius:16px;padding:38px 26px;text-align:center;margin-bottom:20px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .go-title{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:4px;margin-bottom:2px;
@@ -271,7 +260,6 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .btn-row{display:flex;gap:10px;max-width:420px;margin:0 auto}
 .btn-row button{flex:1}
 
-/* leaderboard */
 .lb-card{background:linear-gradient(150deg,rgba(40,116,240,.16),rgba(6,21,55,.92));
   border:1px solid rgba(255,225,27,.22);border-radius:14px;padding:20px 18px;margin-bottom:22px}
 .lb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -319,7 +307,7 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
   .chapter-body{font-size:12px;line-height:1.6}
   .q-text{font-size:14px}
   .opt{font-size:11.5px;padding:8px 9px}
-  .logo-fk{height:22px}.logo-mn{height:18px}
+  .logo-fk{height:42px}
 }
 .btn-primary{
   display:block;width:100%;padding:11px;margin-top:6px;
@@ -399,7 +387,10 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 <div class="app">
 
   <div class="logo-bar">
-    <img src="FK%20Ethincs%20logo.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/flipkart-atfdi/bookcricket/main/FK%20Ethincs%20logo.png'" class="logo-fk" alt="Flipkart Group Ethics &amp; Compliance">
+    <img src="FK%20Ethincs%20logo.png"
+         onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/flipkart-atfdi/bookcricket/main/FK%20Ethincs%20logo.png'"
+         class="logo-fk"
+         alt="Flipkart Group Ethics &amp; Compliance">
   </div>
 
   <div class="screen on" id="scr-login">
@@ -570,16 +561,11 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
         <button class="btn-primary" onclick="show('login')">NEXT PLAYER</button>
       </div>
     </div>
-    <div class="lb-card">
-      <div class="lb-head"><div class="lb-title">🏆 LEADERBOARD</div><div class="lb-count" id="lbCount1">0 players</div></div>
-      <div class="lb-list" id="lbList1"></div>
-    </div>
   </div>
 
 </div>
 
 <script>
-
 const BANK=[
  {q:"Which behaviour is healthy competition?",o:["Sellers agreeing to divide customers across India","A brand lowering prices to win buyers","A platform blocking rival apps","Two apps agreeing to fix the same delivery fee"],a:1,r:"A brand lowering prices to win buyers. Competing on price, quality, and service is exactly what fair competition looks like."},
  {q:"\"Fair competition\" on a marketplace means:",o:["The platform always wins","Every seller gets a fair shot based on merit","Big brands always get priority","More sellers means lower quality"],a:1,r:"Fair competition means every seller competes on merit — price, quality, reviews — not backroom deals or platform favouritism."},
@@ -623,31 +609,75 @@ let leaderboard = [];
 let player = null;
 let st = {};
 
-/* Helper function to post responses to Google Form */
-function postToGoogleForm(runs, balls, wkts, best) {
-  if (!player) return;
-  var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse";
-  var formData = new FormData();
-  formData.append("entry.339170365",  player.id);
-  formData.append("entry.2115079706", player.name);
-  formData.append("entry.1651368544", player.email);
-  formData.append("entry.529639327",  runs);
-  formData.append("entry.64138176",   balls);
-  formData.append("entry.839072272",  wkts);
-  formData.append("entry.1786458713", best);
+/**
+ * FORM CONFIGURATION:
+ * - REG_FORM_URL: Used at registration time in startInnings().
+ *   (If you create a separate Google Form for registrations linked to the same sheet,
+ *   paste its formResponse URL and entry IDs here. By default, it safely records initial details).
+ * - SCORE_FORM_URL: Used when the innings completes in endInnings().
+ */
+const FORM_CONFIG = {
+  scoreUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse",
+  regUrl:   "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse",
+  entryPlayerId: "entry.339170365",
+  entryName:     "entry.2115079706",
+  entryEmail:    "entry.1651368544",
+  entryRuns:     "entry.529639327",
+  entryBalls:    "entry.64138176",
+  entryWkts:     "entry.839072272",
+  entryBest:     "entry.1786458713"
+};
 
-  fetch(formUrl, {
+/**
+ * Sends registration entry immediately when user registers.
+ */
+function postRegistrationToGoogleForm(p) {
+  if (!p) return;
+  var formData = new FormData();
+  formData.append(FORM_CONFIG.entryPlayerId, p.id);
+  formData.append(FORM_CONFIG.entryName,     p.name);
+  formData.append(FORM_CONFIG.entryEmail,    p.email);
+  formData.append(FORM_CONFIG.entryRuns,     "0");
+  formData.append(FORM_CONFIG.entryBalls,    "0");
+  formData.append(FORM_CONFIG.entryWkts,     "0");
+  formData.append(FORM_CONFIG.entryBest,     "0");
+
+  fetch(FORM_CONFIG.regUrl, {
     method: "POST",
     mode: "no-cors",
     body: formData
   }).then(function() {
-    console.log("Response recorded on Google Form (" + (balls === 0 ? "Initial/In-Progress" : "Completed") + ").");
+    console.log("Registration recorded successfully.");
   }).catch(function(err) {
-    console.error("Form post failed:", err);
+    console.error("Registration post failed:", err);
   });
 }
 
-/* Pool builder: 5 scored pages (1-6) and 1 duck page (0) */
+/**
+ * Sends complete game stats when user finishes the innings.
+ */
+function postScoreToGoogleForm(runs, balls, wkts, best) {
+  if (!player) return;
+  var formData = new FormData();
+  formData.append(FORM_CONFIG.entryPlayerId, player.id);
+  formData.append(FORM_CONFIG.entryName,     player.name);
+  formData.append(FORM_CONFIG.entryEmail,    player.email);
+  formData.append(FORM_CONFIG.entryRuns,     runs);
+  formData.append(FORM_CONFIG.entryBalls,    balls);
+  formData.append(FORM_CONFIG.entryWkts,     wkts);
+  formData.append(FORM_CONFIG.entryBest,     best);
+
+  fetch(FORM_CONFIG.scoreUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  }).then(function() {
+    console.log("Completed innings score recorded successfully.");
+  }).catch(function(err) {
+    console.error("Score post failed:", err);
+  });
+}
+
 function buildPool() {
   const scored = [];
   for (let p = 1; p <= 100; p++) {
@@ -692,7 +722,6 @@ function show(name) {
     document.getElementById('emailErr').classList.remove('on');
     setTimeout(() => document.getElementById('empName').focus(), 120);
   }
-  if (name === 'result') renderLB('1');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -724,11 +753,14 @@ function startInnings() {
   const btn = document.querySelector('.btn-primary');
   btn.disabled = true; btn.textContent = 'Registering…';
 
-  const id = 'PL' + (Math.floor(Math.random() * 900000) + 100000);
+  // Sequential Player ID (PL001, PL002, PL003...)
+  let seqCount = parseInt(localStorage.getItem('fk_cricket_seq') || '0', 10) + 1;
+  localStorage.setItem('fk_cricket_seq', seqCount);
+  const id = 'PL' + String(seqCount).padStart(3, '0');
   player = { id, name, email };
 
-  /* INSTANT CAPTURE: Log registration immediately so user data is not lost if they drop midway */
-  postToGoogleForm(0, 0, 0, 0);
+  /* INSTANT CAPTURE: Send user details immediately so data is not lost midway */
+  postRegistrationToGoogleForm(player);
 
   st = {
     pool: buildPool(),
@@ -765,7 +797,6 @@ function startInnings() {
 
 function quitInnings() {
   if (st.ballsUsed > 0 && !st.over) {
-    if (!confirm('End this innings early? Your score will still be recorded.')) return;
     endInnings();
   } else {
     show('login');
@@ -1009,54 +1040,28 @@ function endInnings() {
   if (st.over) return;
   st.over = true;
 
-  /* FINAL CAPTURE: Send full completed statistics */
-  postToGoogleForm(st.runs, st.ballsUsed, st.wkts, st.best);
+  /* FINAL SCORE SUBMISSION: Post full statistics to Google Forms */
+  postScoreToGoogleForm(st.runs, st.ballsUsed, st.wkts, st.best);
 
-  const existing = leaderboard.find(e => e.id === player.id);
-  const entry = { id: player.id, name: player.name, email: player.email,
-                  runs: st.runs, balls: st.ballsUsed, wkts: st.wkts, best: st.best, when: Date.now() };
-  if (existing) { if (st.runs > existing.runs) Object.assign(existing, entry); }
-  else leaderboard.push(entry);
-  leaderboard.sort((a, b) => b.runs - a.runs || a.balls - b.balls);
-
-  document.getElementById('goPlayer').textContent = player.name;
+  document.getElementById('goPlayer').textContent = player.name + ' (' + player.id + ')';
   document.getElementById('goRuns').innerHTML = '<span>' + st.runs + '</span> RUNS';
   document.getElementById('goStats').textContent =
     st.ballsUsed + ' balls · ' + st.wkts + ' wicket' + (st.wkts !== 1 ? 's' : '') + ' · best hit ' + st.best;
 
-  const rank = leaderboard.findIndex(e => e.id === player.id) + 1;
   let v;
   if (st.runs >= 25)      v = 'Match-winning innings! Independence, Pricing and Level Playing Field are second nature to you.';
   else if (st.runs >= 16) v = 'Strong knock. Good compliance instincts — a couple of loose shots cost you wickets.';
   else if (st.runs >= 8)  v = 'Steady innings. Revisit seller independence and pricing autonomy to lift your strike rate.';
   else                    v = 'Back to the nets! Study the Flipkart Ethics & Compliance rule book before your next innings.';
-  document.getElementById('goVerdict').textContent = v + '  You are currently ranked #' + rank + ' of ' + leaderboard.length + '.';
+  document.getElementById('goVerdict').textContent = v;
 
-  renderLB('1');
   show('result');
-}
-
-function renderLB(suffix) {
-  const list  = document.getElementById('lbList'  + suffix);
-  const count = document.getElementById('lbCount' + suffix);
-  count.textContent = leaderboard.length + ' player' + (leaderboard.length !== 1 ? 's' : '');
-  if (!leaderboard.length) {
-    list.innerHTML = '<div class="lb-empty">No innings played yet. Be the first on the board!</div>';
-    return;
-  }
-  list.innerHTML = leaderboard.slice(0, 10).map((e, i) => {
-    const me = player && (e.email === player.email || e.id === player.id) ? ' me' : '';
-    return '<div class="lb-row' + me + '"><div class="lb-rank">' + (i + 1) + '</div>' +
-      '<div class="lb-who"><div class="lb-nm">' + esc(e.name) + '</div><div class="lb-eid">' + esc(e.email || e.id) + '</div></div>' +
-      '<div class="lb-sc">' + e.runs + '<small>' + e.balls + ' balls</small></div></div>';
-  }).join('');
 }
 
 function esc(s) {
   return String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
 }
 
-/* ─── ANIMATIONS ─────────────────────────────────────────────────────────── */
 const canvas = document.getElementById('fxCanvas');
 const ctx    = canvas.getContext('2d');
 let raf = null;
