@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Flipkart Ethics &amp; Compliance — Antitrust &amp; FDI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --fk-blue:#2874F0;--fk-blue-lt:#4D94FF;--fk-blue-dp:#0B2C6F;
+  --fk-navy:#061537;--fk-navy2:#0A2050;
+  --fk-yellow:#FFE11B;--fk-gold:#F9B72B;--fk-amber:#FFC200;
+  --paper:#FFFBEF;--paper2:#F7EFD8;
+  --ink:#12224A;--ink-soft:rgba(18,34,74,.68);
+  --green:#20A44A;--red:#E02B2B;--muted:rgba(255,255,255,.5);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--fk-navy);color:#fff;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 40% at 12% -5%,rgba(255,225,27,.14) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 88% -5%,rgba(40,116,240,.32) 0%,transparent 62%),
+    radial-gradient(ellipse 100% 50% at 50% 110%,rgba(40,116,240,.26) 0%,transparent 60%),
+    linear-gradient(170deg,#061537 0%,#0A2050 45%,#04102B 100%)}
+.bg::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 78px,rgba(255,225,27,.022) 78px 80px)}
+canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
+
+/* overlays */
+.overlay{position:fixed;inset:0;z-index:95;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0}
+#runOverlay{background:radial-gradient(ellipse at center,rgba(11,44,111,.72),rgba(6,21,55,.88))}
+.run-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(100px,23vw,230px);line-height:.82;color:var(--fk-yellow);letter-spacing:5px;
+  text-shadow:0 0 40px rgba(255,225,27,.85),0 0 110px rgba(255,225,27,.4),0 6px 0 rgba(40,116,240,.6)}
+.run-label{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,5vw,50px);color:#fff;letter-spacing:9px;margin-top:4px}
+.run-tag{font-size:15px;color:var(--fk-yellow);margin-top:10px;opacity:.85}
+#outOverlay{background:radial-gradient(ellipse at center,rgba(120,10,10,.7),rgba(30,4,4,.9))}
+.out-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(86px,19vw,190px);line-height:.85;color:#FF4444;letter-spacing:8px;
+  text-shadow:0 0 34px rgba(255,60,60,.85),0 0 90px rgba(255,60,60,.42)}
+.out-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,3.6vw,34px);color:rgba(255,200,200,.82);margin-top:10px;letter-spacing:2px}
+.swing-scene{position:fixed;inset:0;z-index:94;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center}
+.swing-svg{width:min(520px,88vw);height:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.5))}
+.bat-group{transform-origin:118px 150px}
+@keyframes runIn{0%{opacity:0;transform:scale(.22) rotate(-8deg)}16%{opacity:1;transform:scale(1.16) rotate(2deg)}40%{opacity:1;transform:scale(1)}84%{opacity:1}100%{opacity:0;transform:scale(1.05)}}
+@keyframes outIn{0%{opacity:0;transform:translateY(55px)}14%{opacity:1;transform:translateY(-8px)}30%{opacity:1;transform:translateY(0)}78%{opacity:1}100%{opacity:0}}
+@keyframes swingShow{0%{opacity:0}12%{opacity:1}70%{opacity:1}100%{opacity:0}}
+@keyframes batSwing{0%{transform:rotate(-58deg)}22%{transform:rotate(-70deg)}46%{transform:rotate(52deg)}62%{transform:rotate(74deg)}100%{transform:rotate(66deg)}}
+
+.app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 16px 16px}
+.screen{display:none}.screen.on{display:block}
+
+/* header */
+.hdr{text-align:center;padding:2px 0 2px}
+.hdr-kicker{display:inline-flex;align-items:center;gap:8px;font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--fk-navy);background:linear-gradient(135deg,var(--fk-yellow),var(--fk-gold));border-radius:20px;padding:5px 16px;margin-bottom:6px;font-weight:700}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5vw,50px);line-height:.9;letter-spacing:2px;margin-bottom:0}
+.hdr-title .fk{color:var(--fk-blue-lt);text-shadow:0 0 30px rgba(77,148,255,.5)}
+.hdr-title .ipl{color:var(--fk-yellow);text-shadow:0 0 34px rgba(255,225,27,.55)}
+.hdr-sub{font-size:12px;color:#fff;opacity:.72;margin-top:1px}
+.ipl-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0 8px}
+.ipl-card{background:linear-gradient(150deg,rgba(40,116,240,.22),rgba(11,44,111,.5));
+  border:1px solid rgba(255,225,27,.2);border-radius:8px;padding:6px 8px;text-align:center;position:relative;overflow:hidden;transition:transform .18s,border-color .18s}
+.ipl-card:hover{transform:translateY(-3px);border-color:rgba(255,225,27,.5)}
+.ipl-letter{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:.85;
+  background:linear-gradient(160deg,var(--fk-yellow),var(--fk-gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(255,225,27,.3))}
+.ipl-word{font-size:10px;color:#fff;opacity:.88;margin-top:2px;line-height:1.2;font-weight:500}
+
+/* COMPACT GAME HEADER */
+.game-hdr{display:flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(40,116,240,.22),rgba(6,21,55,.9));
+  border:1px solid rgba(255,225,27,.22);border-radius:11px;padding:7px 10px;margin-bottom:8px}
+.gh-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.gh-info{display:flex;flex-direction:column;gap:3px;min-width:0}
+.gh-scores{display:flex;gap:3px;flex-shrink:0}
+.gh-stat{display:flex;flex-direction:column;align-items:center;
+  background:rgba(0,0,0,.25);border-radius:7px;padding:4px 7px;min-width:42px}
+.gh-lbl{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,225,27,.65);font-weight:700}
+.gh-val{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;letter-spacing:1px}
+.pb-balls{display:flex;gap:3px;align-items:center}
+.ball-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);transition:all .3s}
+.ball-dot.used-run{background:var(--fk-yellow);border-color:var(--fk-yellow);box-shadow:0 0 6px rgba(255,225,27,.5)}
+.ball-dot.used-out{background:#FF4444;border-color:#FF6666}
+
+/* LOGIN SCREEN */
+.login-card{max-width:480px;margin:6px auto 16px;background:linear-gradient(150deg,rgba(40,116,240,.22),rgba(6,21,55,.94));
+  border:1.5px solid rgba(255,225,27,.32);border-radius:14px;padding:12px 18px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.login-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;text-align:center;color:var(--fk-yellow);line-height:1;margin-bottom:3px}
+.login-sub{text-align:center;font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.4}
+.field{margin-bottom:6px}
+.field label{display:block;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,225,27,.7);margin-bottom:3px;font-weight:700}
+.field input{width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid rgba(255,225,27,.25);
+  background:rgba(6,21,55,.75);color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;letter-spacing:1px;transition:border-color .15s}
+.field input:focus{outline:none;border-color:var(--fk-yellow);box-shadow:0 0 0 3px rgba(255,225,27,.12)}
+.field input::placeholder{color:rgba(255,255,255,.28);letter-spacing:.5px}
+.err{font-size:12px;color:#FF8080;margin-top:6px;display:none}
+.err.on{display:block}
+.rules-box{background:rgba(255,225,27,.08);border:1px solid rgba(255,225,27,.2);border-radius:8px;padding:7px 10px;margin:6px 0 8px}
+.rules-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fk-yellow);font-weight:700;margin-bottom:4px}
+.rules-list{font-size:11px;color:#E8EEFA;line-height:1.45;display:grid;grid-template-columns:1fr 1fr;gap:1px 10px}
+.rules-list b{color:var(--fk-yellow)}
+
+.pb-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--fk-yellow),var(--fk-gold));
+  display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--fk-navy);flex-shrink:0}
+.pb-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.pb-exit{padding:5px 11px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
+  color:#fff;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:1.5px;flex-shrink:0}
+.pb-exit:hover{background:rgba(255,255,255,.14)}
+.vy{color:var(--fk-yellow);text-shadow:0 0 12px rgba(255,225,27,.4)}
+.vb{color:var(--fk-blue-lt)}.vgr{color:#4ADE80}.vr{color:#FF7A7A}.vw{color:#fff}
+.scoreboard{display:none}
+@keyframes scorePop{0%{transform:scale(1)}30%{transform:scale(1.6);filter:brightness(1.6)}100%{transform:scale(1)}}
+.score-pop{animation:scorePop .7s ease}
+
+/* wickets */
+.pitch-strip{display:flex;align-items:flex-end;justify-content:center;gap:15px;
+  background:linear-gradient(135deg,rgba(11,44,111,.6),rgba(6,21,55,.85));
+  border:1px solid rgba(40,116,240,.35);border-radius:12px;padding:15px 10px 9px;margin-bottom:22px;position:relative;overflow:hidden}
+.pitch-strip::before{content:'';position:absolute;left:0;right:0;bottom:24px;height:1px;background:rgba(255,225,27,.14)}
+.w-unit{display:flex;flex-direction:column;align-items:center;gap:4px}
+.stumps{display:flex;align-items:flex-end;gap:3px}
+.stump{width:7px;border-radius:3px 3px 1px 1px;background:linear-gradient(180deg,#FFE98A,#F9B72B);position:relative;
+  transform-origin:bottom center;transition:transform .5s cubic-bezier(.36,.07,.19,.97),opacity .4s}
+.stump.s1{height:36px}.stump.s2{height:42px}.stump.s3{height:36px}
+.bail{position:absolute;top:-5px;height:5px;border-radius:2px;background:linear-gradient(90deg,var(--fk-yellow),var(--fk-gold));transition:transform .15s,opacity .15s}
+.bail.b1{width:10px;left:-1px}.bail.b2{width:10px;left:7px}
+.stump.fallen{transform:rotate(50deg) translateY(4px);opacity:.24}
+.stump.fallen .bail{opacity:0;transform:translateY(-12px) rotate(28deg)}
+.wlabel{font-size:9px;color:rgba(255,255,255,.2)}
+
+/* book */
+.book-zone{display:flex;flex-direction:column;align-items:center;margin-bottom:22px}
+.book{width:100%;max-width:660px;perspective:2000px;margin-bottom:22px}
+.book-inner{position:relative;background:linear-gradient(155deg,#1B4FA8,#0B2C6F 45%,#061A42);border-radius:12px;padding:15px;
+  box-shadow:0 26px 70px rgba(0,0,0,.65),0 0 0 1.5px rgba(255,225,27,.28),inset 0 1px 0 rgba(255,255,255,.1)}
+.book-inner::after{content:'';position:absolute;inset:7px;border:1px solid rgba(255,225,27,.22);border-radius:8px;pointer-events:none;z-index:7}
+.book-inner::before{content:'';position:absolute;left:50%;top:15px;bottom:15px;width:16px;transform:translateX(-50%);
+  background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.1) 45%,rgba(0,0,0,.5));z-index:5;pointer-events:none;border-radius:2px}
+.spread{display:grid;grid-template-columns:1fr 1fr;min-height:340px;border-radius:6px;overflow:hidden}
+.page{background:linear-gradient(175deg,var(--paper),var(--paper2));padding:22px 20px 42px;position:relative;display:flex;flex-direction:column}
+.page.left{border-right:1px solid rgba(18,34,74,.09);
+  background-image:linear-gradient(175deg,var(--paper),var(--paper2)),linear-gradient(90deg,rgba(18,34,74,.09),transparent 24%)}
+.page.right{background-image:linear-gradient(175deg,var(--paper),var(--paper2)),linear-gradient(270deg,rgba(18,34,74,.09),transparent 24%)}
+.page::after{content:'';position:absolute;left:20px;right:20px;top:22px;bottom:42px;pointer-events:none;
+  background:repeating-linear-gradient(180deg,transparent 0 27px,rgba(18,34,74,.055) 27px 28px)}
+.page-num{position:absolute;bottom:11px;left:0;right:0;text-align:center;z-index:2;
+  font-family:'Crimson Pro',serif;font-size:13px;color:rgba(18,34,74,.45);letter-spacing:1px}
+.page-num strong{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--fk-blue);letter-spacing:1px;padding:0 6px;border-bottom:2px solid var(--fk-yellow)}
+.chapter-pill{display:inline-block;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;
+  background:linear-gradient(135deg,var(--fk-yellow),var(--fk-gold));color:var(--fk-navy);padding:3px 10px;border-radius:20px;margin-bottom:10px;z-index:2;position:relative}
+.chapter-title{font-family:'Crimson Pro',serif;font-size:23px;font-weight:600;color:var(--fk-blue-dp);line-height:1.22;margin-bottom:6px;z-index:2;position:relative}
+.chapter-body{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink-soft);line-height:1.75;z-index:2;position:relative}
+.last-digit-box{margin-top:auto;background:linear-gradient(135deg,rgba(255,225,27,.3),rgba(249,183,43,.18));
+  border:1.5px solid rgba(249,183,43,.5);border-radius:10px;padding:11px 13px;z-index:2;position:relative;box-shadow:0 3px 10px rgba(249,183,43,.15)}
+.ld-label{font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:rgba(18,34,74,.6);margin-bottom:3px;font-weight:700}
+.ld-val{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:var(--fk-blue-dp);letter-spacing:1px}
+.ld-note{font-size:11px;color:rgba(18,34,74,.65);margin-top:3px;line-height:1.4}
+.q-label{font-family:'Crimson Pro',serif;font-style:italic;font-size:12px;color:rgba(18,34,74,.5);margin-bottom:8px;z-index:2;position:relative}
+.q-text{font-family:'Crimson Pro',serif;font-size:17px;line-height:1.48;color:var(--fk-blue-dp);font-weight:600;margin-bottom:14px;z-index:2;position:relative}
+.opts{display:flex;flex-direction:column;gap:7px;z-index:2;position:relative}
+.opt{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:8px;border:1.5px solid rgba(40,116,240,.22);
+  background:rgba(255,255,255,.55);cursor:pointer;text-align:left;width:100%;
+  font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.42;color:var(--ink);transition:border-color .12s,background .12s,transform .1s}
+.opt:hover:not(:disabled){border-color:var(--fk-blue);background:rgba(255,225,27,.22);transform:translateX(2px)}
+.opt:disabled{cursor:default}
+.opt-key{min-width:21px;height:21px;border-radius:50%;background:rgba(40,116,240,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--fk-blue);margin-top:1px;transition:background .15s,color .15s}
+.opt.correct{border-color:var(--green);background:rgba(32,164,74,.16)}
+.opt.correct .opt-key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:rgba(224,43,43,.14)}
+.opt.wrong .opt-key{background:var(--red);color:#fff}
+.rule-note{margin-top:12px;padding:10px 12px;border-radius:8px;border-left:3px solid;font-family:'DM Sans',sans-serif;font-size:11.5px;line-height:1.5;display:none;z-index:2;position:relative}
+.rule-ok{background:rgba(32,164,74,.14);border-color:var(--green);color:#0F4D26}
+.rule-no{background:rgba(224,43,43,.12);border-color:var(--red);color:#7A1414}
+.rule-tag{font-size:9px;text-transform:uppercase;letter-spacing:1.3px;font-weight:700;opacity:.68;margin-bottom:2px}
+.book-closed{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:340px;
+  background:linear-gradient(155deg,#2874F0 0%,#0B2C6F 55%,#061A42 100%);border-radius:6px;position:relative;overflow:hidden}
+.book-closed::before{content:'';position:absolute;inset:16px;border:2px solid rgba(255,225,27,.35);border-radius:5px}
+.book-closed::after{content:'';position:absolute;inset:22px;border:1px solid rgba(255,225,27,.15);border-radius:3px}
+.bc-emblem{font-size:50px;margin-bottom:10px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4))}
+.bc-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:5px;text-align:center;line-height:1.02;
+  background:linear-gradient(160deg,var(--fk-yellow),var(--fk-gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.bc-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(255,255,255,.72);margin-top:8px;text-align:center;padding:0 26px;line-height:1.5}
+.bc-pages{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,225,27,.6);margin-top:18px;font-weight:600}
+@keyframes bookOpen{0%{transform:rotateY(-90deg) scale(.92);opacity:0}55%{transform:rotateY(10deg) scale(1.015);opacity:1}82%{transform:rotateY(-3deg) scale(1)}100%{transform:rotateY(0) scale(1);opacity:1}}
+.spread.opening{animation:bookOpen .85s cubic-bezier(.3,.7,.4,1) forwards;transform-origin:left center}
+
+/* rich flip */
+.flip-stage{display:none;position:relative;min-height:340px;border-radius:6px;overflow:hidden;perspective:1900px;
+  background:linear-gradient(175deg,var(--paper),var(--paper2))}
+.flip-stage.on{display:block}
+.flip-base{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.flip-base-page{background:linear-gradient(175deg,var(--paper),var(--paper2));position:relative}
+.flip-base-page::after{content:'';position:absolute;left:18px;right:18px;top:24px;bottom:40px;
+  background:repeating-linear-gradient(180deg,transparent 0 27px,rgba(18,34,74,.055) 27px 28px)}
+.flip-base-page.l{background-image:linear-gradient(175deg,var(--paper),var(--paper2)),linear-gradient(90deg,rgba(18,34,74,.1),transparent 26%)}
+.flip-base-page.r{background-image:linear-gradient(175deg,var(--paper),var(--paper2)),linear-gradient(270deg,rgba(18,34,74,.1),transparent 26%)}
+.flip-sheet{position:absolute;top:0;bottom:0;right:50%;width:50%;transform-origin:right center;transform-style:preserve-3d;opacity:0;will-change:transform}
+.sheet-face{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;border-radius:2px 0 0 2px}
+.sheet-front{background:linear-gradient(90deg,rgba(18,34,74,.14) 0%,rgba(18,34,74,0) 12%,rgba(255,255,255,.5) 46%,var(--paper) 74%,var(--paper2) 100%);
+  box-shadow:inset -14px 0 26px -12px rgba(18,34,74,.35)}
+.sheet-back{transform:rotateY(180deg);
+  background:linear-gradient(90deg,var(--paper2) 0%,var(--paper) 28%,rgba(255,255,255,.55) 58%,rgba(18,34,74,0) 90%,rgba(18,34,74,.14) 100%);
+  box-shadow:inset 14px 0 26px -12px rgba(18,34,74,.35)}
+.sheet-face::before{content:'';position:absolute;left:16px;right:16px;top:26px;bottom:38px;
+  background:repeating-linear-gradient(180deg,transparent 0 27px,rgba(18,34,74,.05) 27px 28px)}
+.sheet-face::after{content:'';position:absolute;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,rgba(255,225,27,.5),rgba(249,183,43,.28),rgba(255,225,27,.5))}
+.sheet-front::after{left:0}.sheet-back::after{right:0}
+@keyframes sheetTurn{0%{transform:rotateY(0deg) translateZ(0)}35%{transform:rotateY(-62deg) translateZ(16px)}
+  60%{transform:rotateY(-112deg) translateZ(22px)}100%{transform:rotateY(-178deg) translateZ(0)}}
+.flip-sheet.turning{animation:sheetTurn .42s cubic-bezier(.42,.02,.58,1) forwards}
+.flip-shadow{position:absolute;top:0;bottom:0;right:50%;width:50%;transform-origin:right center;
+  background:linear-gradient(90deg,rgba(6,21,55,0),rgba(6,21,55,.34));opacity:0;pointer-events:none;z-index:2;border-radius:2px}
+@keyframes shadowSweep{0%{opacity:0;transform:rotateY(0deg)}40%{opacity:.7;transform:rotateY(-60deg)}100%{opacity:0;transform:rotateY(-175deg)}}
+.flip-shadow.sweeping{animation:shadowSweep .42s cubic-bezier(.42,.02,.58,1) forwards}
+.flip-stage::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:34px;transform:translateX(-50%);
+  background:linear-gradient(90deg,rgba(6,21,55,.02),rgba(6,21,55,.3),rgba(6,21,55,.02));z-index:6;pointer-events:none}
+.speed-lines{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(92deg,transparent 0 22px,rgba(40,116,240,.09) 22px 24px)}
+@keyframes speedPulse{0%{opacity:0;transform:translateX(0)}40%{opacity:.75;transform:translateX(-16px)}100%{opacity:0;transform:translateX(-34px)}}
+.speed-lines.on{animation:speedPulse .42s ease forwards}
+.flip-counter{position:absolute;left:0;right:0;bottom:14px;text-align:center;z-index:9;
+  font-family:'Crimson Pro',serif;font-size:12px;color:rgba(18,34,74,.5);letter-spacing:1px}
+.flip-counter strong{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:3px;display:block;line-height:1;
+  color:var(--fk-blue-dp);text-shadow:0 2px 0 rgba(255,225,27,.5)}
+.flip-status{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;z-index:9;
+  font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:7px;color:rgba(40,116,240,.3);animation:statusBlink 1s ease-in-out infinite}
+@keyframes statusBlink{0%,100%{opacity:.45}50%{opacity:.95}}
+
+/* duck */
+.duck-page{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;min-height:255px;z-index:2;position:relative}
+.duck-zero{font-family:'Bebas Neue',sans-serif;font-size:158px;line-height:.78;color:rgba(224,43,43,.13);margin-bottom:-24px}
+.duck-mark{font-family:'Bebas Neue',sans-serif;font-size:92px;line-height:.85;color:var(--red);letter-spacing:6px;text-shadow:0 3px 0 rgba(224,43,43,.2)}
+.duck-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;color:var(--fk-blue-dp);margin-top:10px}
+.duck-body{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink-soft);line-height:1.7;margin-top:8px;max-width:300px}
+.duck-rule{margin-top:16px;padding:10px 13px;border-radius:8px;background:rgba(224,43,43,.1);border-left:3px solid var(--red);
+  font-family:'DM Sans',sans-serif;font-size:11.5px;line-height:1.5;color:#7A1414;text-align:left;max-width:320px}
+
+/* ball */
+.spin-zone{display:flex;flex-direction:column;align-items:center;gap:10px}
+.ball-btn{width:110px;height:110px;border-radius:50%;border:none;cursor:pointer;z-index:2;padding:0;
+  background:none;display:flex;align-items:center;justify-content:center;position:relative;
+  transition:transform .15s,filter .15s;filter:drop-shadow(0 8px 22px rgba(0,0,0,.6))}
+.ball-btn:hover:not(:disabled){transform:scale(1.08);filter:drop-shadow(0 10px 28px rgba(255,225,27,.4))}
+.ball-btn:active:not(:disabled){transform:scale(.94)}
+.ball-btn:disabled{opacity:.52;cursor:default}
+.ball-svg{width:110px;height:110px;border-radius:50%;display:block}
+.ball-label{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;
+  color:#fff;text-align:center;line-height:1.1;pointer-events:none;
+  text-shadow:0 2px 8px rgba(0,0,0,0.95);z-index:2}
+@keyframes ballSpin{
+  0%{transform:rotate(0) scale(1)}
+  28%{transform:rotate(480deg) scale(1.12)}
+  60%{transform:rotate(700deg) scale(.94)}
+  82%{transform:rotate(718deg) scale(1.03)}
+  100%{transform:rotate(720deg) scale(1)}
+}
+.ball-btn.spinning{animation:ballSpin .85s cubic-bezier(.36,.07,.19,.97) forwards;pointer-events:none}
+.spin-hint{font-size:12px;color:var(--muted);text-align:center}
+
+/* results */
+.gameover{display:none;background:linear-gradient(155deg,rgba(40,116,240,.22),rgba(6,21,55,.97));
+  border:1.5px solid rgba(255,225,27,.35);border-radius:16px;padding:38px 26px;text-align:center;margin-bottom:20px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.go-title{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:4px;margin-bottom:2px;
+  background:linear-gradient(160deg,var(--fk-yellow),var(--fk-gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.go-player{font-size:13px;color:var(--muted);margin-bottom:10px;letter-spacing:1px}
+.go-runs{font-family:'Bebas Neue',sans-serif;font-size:74px;color:#fff;line-height:1}
+.go-runs span{color:var(--fk-yellow);text-shadow:0 0 30px rgba(255,225,27,.5)}
+.go-stats{font-size:14px;color:var(--muted);margin:10px 0 8px}
+.go-verdict{font-size:15px;color:#E8EEFA;line-height:1.6;max-width:450px;margin:0 auto 22px}
+.btn-row{display:flex;gap:10px;max-width:420px;margin:0 auto}
+.btn-row button{flex:1}
+
+/* leaderboard */
+.lb-card{background:linear-gradient(150deg,rgba(40,116,240,.16),rgba(6,21,55,.92));
+  border:1px solid rgba(255,225,27,.22);border-radius:14px;padding:20px 18px;margin-bottom:22px}
+.lb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.lb-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2.5px;color:var(--fk-yellow)}
+.lb-count{font-size:11px;color:var(--muted);letter-spacing:1px}
+.lb-list{display:flex;flex-direction:column;gap:6px}
+.lb-row{display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:9px;background:rgba(255,255,255,.05);
+  border:1px solid transparent;transition:background .15s}
+.lb-row.me{background:rgba(255,225,27,.13);border-color:rgba(255,225,27,.4)}
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:20px;width:30px;color:var(--muted);flex-shrink:0}
+.lb-row:nth-child(1) .lb-rank{color:var(--fk-yellow)}
+.lb-row:nth-child(2) .lb-rank{color:#C0C8D8}
+.lb-row:nth-child(3) .lb-rank{color:#CD8A4A}
+.lb-who{flex:1;min-width:0}
+.lb-nm{font-size:13.5px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-eid{font-size:11px;color:var(--fk-yellow);letter-spacing:.8px}
+.lb-sc{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--fk-yellow);flex-shrink:0}
+.lb-sc small{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;display:block;text-align:right;letter-spacing:.5px}
+.lb-empty{text-align:center;font-size:13px;color:var(--muted);padding:18px}
+
+@media(max-width:660px){
+  .app{padding:0 10px 10px}
+  .spread{grid-template-columns:1fr;min-height:auto}
+  .page.left{display:flex !important;border-right:none;border-bottom:2px dashed rgba(18,34,74,.18);padding:16px 14px 28px}
+  .page.right{padding:16px 14px 28px}
+  .last-digit-box{margin-top:12px;padding:8px 10px}
+  .ld-val{font-size:24px}
+  .book-inner::before{display:none}
+  .flip-base{grid-template-columns:1fr}
+  .flip-base-page.l{display:none}
+  .flip-sheet,.flip-shadow{right:0;width:100%}
+  .game-hdr{padding:5px 8px;gap:5px}
+  .gh-stat{min-width:36px;padding:3px 5px}
+  .gh-val{font-size:19px}
+  .gh-lbl{font-size:6px}
+  .pb-avatar{width:28px;height:28px;font-size:12px}
+  .pb-name{font-size:11px;max-width:80px}
+  .ball-dot{width:8px;height:8px}
+  .book{margin-bottom:8px}
+  .book-inner{padding:8px}
+  .ball-btn{width:90px;height:90px}
+  .ball-svg{width:90px;height:90px}
+  .spin-zone{gap:6px}
+  .chapter-title{font-size:17px}
+  .chapter-body{font-size:12px;line-height:1.6}
+  .q-text{font-size:14px}
+  .opt{font-size:11.5px;padding:8px 9px}
+  .logo-fk{height:22px}.logo-mn{height:18px}
+}
+.btn-primary{
+  display:block;width:100%;padding:11px;margin-top:6px;
+  background:linear-gradient(135deg,var(--fk-yellow),var(--fk-gold));
+  color:var(--fk-navy);border:none;border-radius:12px;cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;
+  box-shadow:0 6px 22px rgba(255,225,27,.35),0 2px 0 rgba(255,255,255,.15) inset;
+  transition:transform .12s,box-shadow .12s,filter .12s;
+  position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 55%);
+  pointer-events:none;border-radius:12px;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(255,225,27,.5),0 2px 0 rgba(255,255,255,.15) inset;
+  filter:brightness(1.07);
+}
+.btn-primary:active{transform:translateY(1px);box-shadow:0 3px 12px rgba(255,225,27,.35);}
+
+.logo-bar{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 0}
+.logo-fk{height:26px;width:auto;border-radius:6px}
+.logo-mn{height:22px;width:auto}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<canvas class="fx" id="fxCanvas"></canvas>
+
+<div class="swing-scene" id="swingScene">
+  <svg class="swing-svg" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="20" y1="228" x2="380" y2="228" stroke="rgba(255,225,27,.28)" stroke-width="2"/>
+    <g opacity=".6">
+      <rect x="60" y="176" width="5" height="52" rx="2" fill="#F9B72B"/>
+      <rect x="70" y="172" width="5" height="56" rx="2" fill="#F9B72B"/>
+      <rect x="80" y="176" width="5" height="52" rx="2" fill="#F9B72B"/>
+      <rect x="58" y="168" width="14" height="4" rx="2" fill="#FFE11B"/>
+      <rect x="73" y="168" width="14" height="4" rx="2" fill="#FFE11B"/>
+    </g>
+    <g>
+      <rect x="106" y="176" width="12" height="52" rx="5" fill="#2874F0"/>
+      <rect x="124" y="176" width="12" height="52" rx="5" fill="#2874F0"/>
+      <rect x="104" y="182" width="16" height="44" rx="6" fill="#FFFBEF" opacity=".94"/>
+      <rect x="122" y="182" width="16" height="44" rx="6" fill="#FFFBEF" opacity=".94"/>
+      <rect x="102" y="120" width="40" height="60" rx="14" fill="#FFE11B"/>
+      <rect x="102" y="142" width="40" height="8" fill="#2874F0" opacity=".85"/>
+      <circle cx="122" cy="104" r="17" fill="#E8C9A0"/>
+      <path d="M105 102 a17 17 0 0 1 34 0 v-5 a17 17 0 0 0 -34 0 z" fill="#2874F0"/>
+      <path d="M104 100 a18 18 0 0 1 36 0 l0 -4 a18 18 0 0 0 -36 0 z" fill="#0B2C6F"/>
+      <path d="M138 100 q10 8 -2 18" stroke="#FFE11B" stroke-width="2.4" fill="none"/>
+    </g>
+    <g class="bat-group" id="batGroup">
+      <rect x="112" y="132" width="30" height="10" rx="5" fill="#FFE11B"/>
+      <rect x="130" y="140" width="9" height="34" rx="4" fill="#12224A"/>
+      <rect x="124" y="172" width="21" height="66" rx="6" fill="#F3DCA6"/>
+      <rect x="124" y="172" width="21" height="66" rx="6" fill="url(#wg)" opacity=".4"/>
+      <rect x="127" y="178" width="15" height="54" rx="4" fill="none" stroke="rgba(40,116,240,.4)" stroke-width="1"/>
+    </g>
+    <defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B98A3E" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#B98A3E" stop-opacity="0"/>
+      <stop offset="1" stop-color="#B98A3E" stop-opacity=".55"/></linearGradient></defs>
+  </svg>
+</div>
+
+<div class="overlay" id="runOverlay">
+  <div class="run-word" id="runWord">4</div>
+  <div class="run-label" id="runLabel">RUNS</div>
+  <div class="run-tag" id="runTag"></div>
+</div>
+<div class="overlay" id="outOverlay">
+  <div class="out-word">OUT!</div>
+  <div class="out-sub" id="outSub">Bails off — no runs scored</div>
+</div>
+
+<div class="app">
+
+  <div class="logo-bar"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+YAAAFECAYAAACqKyTrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAKApSURBVHhe7N11eFPXGwfw743UvbgVd3e2wQRmbMx9+405c3dnPubuLsx9jAkwtuHuLgUKlLo3TXLP748kJdwmN+feJk0L38/z5Nl406aRm3vPe857zlGEECAiIiIiIiKiKGJiTkRERERERBRFTMyJiIiIiIiIooiJOREREREREVEUMTEnIiIiIiIiiiIm5kRERERERERRxMSciIiIiIiIKIqYmBMRERERERFFERNzIiIiIiIioihiYk5EREREREQURUzMiYiIiIiIiKKIiTkRERERERFRFDExJyIiIiIiIooiJOREREREREVEUMTEnIiIiIiIiiiIm5kRERERERERRxMSciIiIiIiIKIqYmBMRERERERFFERNzIiIiIiIioihiYk5EREREREQURUzMiYiIiIiIiKKIiTkRERERERFRFDExJyIiIiIiIooiJQihjR1IlLVBbtscbdiQ+POA1Le1UZKmAsIJwAUIN6Bo76fGw+q5KXbv/xMRERER0UGj+HKg+mtt1JjMGWfCPuw7/xAT80ZFoDbrVvMA5zLAuQJwbwTcewBRCogKT3JOjYoQAoqiAEoSYEmCsDSDYu0K2AcA9iGAtYPvJ73/Ze8KEREREVGTw8T8YOaXrLk3AZXvAVXfAWqRZ5QcbkAogGKr/dlQHxs1JAFF8XwmimLxfF5QPTNFFDuAOMB+JJB4BRA72juS7tcJQ0RERERETQMT84OVAEQJ4PgXqP4ScEz3lq0LADYAKoRQoUDR5HEhPjdqYL4Px/9zsXjjbm8ebveMnsefD8QeC1hbs9ydiIiIiKgpiVBizsXfokZ4Eraav4HiSRAl1wPVv0KoNd7czpvQQYWiAFCE93d8N2pctJ+L4v236v2n4ql+cC4ESu8ASq4Eqr70fsb8PImIiIiIDmVMzKNFuIGyx4DCc4Dq6VBEqV8SjgCJHjUtdTtRBAAhVAAuiJq5QMkkiKILAffeA36TiIiIiIgOLUwMG5R3BNW1Dii5CKh4DkK4vPd5R1Zrf44OLgIKhLfTRfX8P2xQHNOA4vMAx6w6iTwRERERER0amJg3GG/C5VwAlFwFUTUdgAWKovrNHWdSdrDzXyZAwO1ZxM+5AqLkaqDyI7/1BYiIiIiI6FDBxLxBCE9K5lwOFJ0P1KyBArff0uocKT0U7U/SVSgiHyi9C6j6uDZGRERERESHBq7K3iBUwLkIKDoHUEsBCM9K64pvgTA6dCkQEJ4kXbEBSjKQ8iIQdxq3U2vkistcWLGxBDn7qlFa4UJivBUtM2LRqlksendOhs16cH5+y9aXIntPpTasKynBhnEjmmnDRERERE1PhFZlZ2LeEJwrgdLrAOca70goR8jpQJ6aCgUCFiiWZCDlOSDubO2PkY65K4pw1aMrtOGQ7rmsGy4c31YbDmrh6mI8/+kW/L24YH/Ri0arZrG4aHw7TDorCymJNu3dTdr59yzFzIX52rCu0YMy8M2zQ7VhoqhxucVB23lGREQRxsS8KVI9swUKz4Zw/AVFUfePjhJp7P8m2qBY2wFpUwF7r0Y14yS3wIEqR/TK7FOSbMhIsWvDAIB3v9+B+15drw2H9OXTQ3DU0ExtOKDPpuXg1ufWaMNBDeuThq+mDEFC3MGzX/3QC/7BztxqbVjXZae1x5M39NKGiSKmpNyFeSuLsHB1EXbsrcKu3CrsznOgosqFymo3VBWwWICEOCsS421ISbShXcs4ZLVOQFbrePTqlIwhvVMPuo41IiIKAybmTZEbKH/Osy2acuCyX0R1+Y4R7xSHuNOB1DcAJa7RlLWPnTQPqzeXacMN5pFre2DSmVnaMADgzhfX4aOfd2rDIS2dOgZtW8Rpw3Us31CKCTctQI3T2Pf3pgs64d7Lu2nDTVJltRudTpqhDYf01I29cOmp7bVhorCprHZj4epo/LusEP8tK8CKjaVBK1qM6JGViGOGN8NZ49qgb9dk7d1ERERERETU2I2EBy4R9q3fBi38L1v39/4/4X4k3f8/4f7E3f053N94iIn5ISb3LpM0EREREREREUXN/wO2fJg0QfWvggAAAABJRU5ErkJggg==" style="height:52px;width:auto;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" alt="Flipkart Group Ethics &amp; Compliance"></div>
+
+  <div class="screen on" id="scr-login">
+    <header class="hdr">
+      <div class="hdr-kicker">⚡ Ethics &amp; Compliance</div>
+      <div class="hdr-title"><span class="fk">FLIPKART</span> <span class="ipl">ETHICS &amp; COMPLIANCE</span></div>
+      <div class="hdr-sub">IPL · Antitrust &amp; FDI Awareness · Book Cricket</div>
+    </header>
+    <div class="ipl-strip">
+      <div class="ipl-card"><div class="ipl-letter">I</div><div class="ipl-word">Independence<br>of Sellers</div></div>
+      <div class="ipl-card"><div class="ipl-letter">P</div><div class="ipl-word">Pricing &amp;<br>Promotions</div></div>
+      <div class="ipl-card"><div class="ipl-letter">L</div><div class="ipl-word">Level<br>Playing Field</div></div>
+    </div>
+    <div class="login-card">
+      <div class="login-title">PLAYER REGISTRATION</div>
+      <div class="login-sub">Register to start your innings</div>
+      <div class="field">
+        <label for="empName">Employee Name</label>
+        <input id="empName" placeholder="Your full name" autocomplete="off" maxlength="60"
+               onkeydown="if(event.key==='Enter')startInnings()">
+        <div class="err" id="empErr">Please enter your name (at least 2 characters).</div>
+      </div>
+      <div class="field">
+        <label for="empEmail">Work Email</label>
+        <input id="empEmail" placeholder="yourname@flipkart.com" autocomplete="off" maxlength="80" type="email"
+               onkeydown="if(event.key==='Enter')startInnings()">
+        <div class="err" id="emailErr">Please enter a valid work email address.</div>
+      </div>
+      <div class="rules-box">
+        <div class="rules-title">Innings Rules</div>
+        <div class="rules-list">
+          <span>• <b>6 balls</b> per innings</span>
+          <span>• Spin → random page</span>
+          <span>• Page ending 1–6 → answer Q to score</span>
+          <span>• Wrong answer → <b>OUT</b> (0 runs)</span>
+          <span>• Page ending 0 → <b>DUCK</b> (out, no Q)</span>
+          <span>• At most <b>1 duck</b> per innings</span>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startInnings()">START MY INNINGS</button>
+    </div>
+  </div>
+
+  <div class="screen" id="scr-game">
+
+    <div class="game-hdr" id="gameHdr">
+      <div class="gh-left">
+        <div class="pb-avatar" id="pbAvatar">--</div>
+        <div class="gh-info">
+          <div class="pb-name" id="pbName">Player</div>
+          <div class="pb-balls" id="pbBalls"></div>
+        </div>
+      </div>
+      <div class="gh-scores">
+        <div class="gh-stat"><span class="gh-lbl">RUNS</span><span class="gh-val vy" id="sRuns">0</span></div>
+        <div class="gh-stat"><span class="gh-lbl">LEFT</span><span class="gh-val vb" id="sLeft">6</span></div>
+        <div class="gh-stat"><span class="gh-lbl">OUT</span><span class="gh-val vr" id="sWkts">0</span></div>
+        <div class="gh-stat"><span class="gh-lbl">BEST</span><span class="gh-val vgr" id="sBest">0</span></div>
+      </div>
+      <button class="pb-exit" onclick="quitInnings()">EXIT</button>
+    </div>
+
+    <div class="pitch-strip" id="pitchStrip"></div>
+
+    <div class="book-zone">
+      <div class="book"><div class="book-inner">
+
+        <div class="book-closed" id="bookClosed">
+          <div class="bc-emblem">📘</div>
+          <div class="bc-title">FLIPKART ETHICS<br>&amp; COMPLIANCE</div>
+          <div class="bc-sub">Independence · Pricing · Level Playing Field<br>100 pages of Antitrust &amp; FDI awareness</div>
+          <div class="bc-pages" id="bcPages">Spin the ball to flip to a page</div>
+        </div>
+
+        <div class="flip-stage" id="flipStage">
+          <div class="flip-base"><div class="flip-base-page l"></div><div class="flip-base-page r"></div></div>
+          <div class="flip-shadow" id="flipShadow"></div>
+          <div class="flip-sheet" id="fs0"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs1"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs2"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs3"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs4"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs5"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs6"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs7"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs8"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs9"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs10"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="flip-sheet" id="fs11"><div class="sheet-face sheet-front"></div><div class="sheet-face sheet-back"></div></div>
+          <div class="speed-lines" id="speedLines"></div>
+          <div class="flip-status">FLIPPING</div>
+          <div class="flip-counter">Page <strong id="flipNum">1</strong></div>
+        </div>
+
+        <div class="spread" id="spread" style="display:none">
+          <div class="page left">
+            <div class="chapter-pill" id="chapPill">Chapter I</div>
+            <div class="chapter-title" id="chapTitle"></div>
+            <div class="chapter-body" id="chapBody"></div>
+            <div class="last-digit-box">
+              <div class="ld-label">Runs on offer</div>
+              <div class="ld-val" id="ldVal">—</div>
+              <div class="ld-note" id="ldNote"></div>
+            </div>
+            <div class="page-num">Page <strong id="pageNumLeft">—</strong></div>
+          </div>
+          <div class="page right">
+            <div id="questionView">
+              <div class="q-label" id="qLabel">Question</div>
+              <div class="q-text" id="qText"></div>
+              <div class="opts" id="opts"></div>
+              <div class="rule-note" id="ruleNote"><div class="rule-tag">Compliance Insight</div><div id="ruleText"></div></div>
+            </div>
+            <div class="duck-page" id="duckView" style="display:none">
+              <div class="duck-zero">0</div>
+              <div class="duck-mark">DUCK</div>
+              <div class="duck-title">Page ends in zero</div>
+              <div class="duck-body">No question on this page — the book gives you a duck. Next ball coming up.</div>
+              <div class="duck-rule">In book cricket, a page ending in 0 is an automatic duck. No runs scored — but you play all 6 balls.</div>
+            </div>
+            <div class="page-num">Page <strong id="pageNumRight">—</strong></div>
+          </div>
+        </div>
+
+      </div></div>
+
+      <div class="spin-zone" id="spinZone">
+        <button class="ball-btn" id="ballBtn" onclick="spinBall()" aria-label="Spin the ball">
+          <svg class="ball-svg" id="ballSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="bg" cx="35%" cy="30%" r="65%">
+                <stop offset="0%" stop-color="#E74C3C"/>
+                <stop offset="45%" stop-color="#B0291B"/>
+                <stop offset="85%" stop-color="#6E120A"/>
+                <stop offset="100%" stop-color="#400A05"/>
+              </radialGradient>
+              <radialGradient id="shine" cx="30%" cy="25%" r="35%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+                <stop offset="50%" stop-color="rgba(255,255,255,0.15)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="url(#bg)"/>
+            <g transform="rotate(-30 50 50)">
+              <path d="M 0 50 Q 50 78 100 50" fill="none" stroke="#4A0B06" stroke-width="12" opacity="0.6"/>
+              <path d="M 0 44 Q 50 72 100 44" fill="none" stroke="#F5E6C8" stroke-width="2.2" stroke-dasharray="3 2.5"/>
+              <path d="M 0 50 Q 50 78 100 50" fill="none" stroke="#F5E6C8" stroke-width="1.8" stroke-dasharray="2 3"/>
+              <path d="M 0 56 Q 50 84 100 56" fill="none" stroke="#F5E6C8" stroke-width="2.2" stroke-dasharray="3 2.5"/>
+            </g>
+            <ellipse cx="36" cy="30" rx="20" ry="14" fill="url(#shine)"/>
+          </svg>
+          <div class="ball-label" id="ballLabel">SPIN<br>THE BALL</div>
+        </button>
+        <div class="spin-hint" id="spinHint">6 balls remaining</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="screen" id="scr-result">
+    <div class="gameover" id="gameover" style="display:block">
+      <div class="go-title">INNINGS OVER</div>
+      <div class="go-player" id="goPlayer"></div>
+      <div class="go-runs" id="goRuns"><span>0</span> RUNS</div>
+      <div class="go-stats" id="goStats"></div>
+      <div class="go-verdict" id="goVerdict"></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="show('login')">NEXT PLAYER</button>
+      </div>
+    </div>
+    <div class="lb-card">
+      <div class="lb-head"><div class="lb-title">🏆 LEADERBOARD</div><div class="lb-count" id="lbCount1">0 players</div></div>
+      <div class="lb-list" id="lbList1"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const BANK=[
+ {q:"Which behaviour is healthy competition?",o:["Sellers agreeing to divide customers across India","A brand lowering prices to win buyers","A platform blocking rival apps","Two apps agreeing to fix the same delivery fee"],a:1,r:"A brand lowering prices to win buyers. Competing on price, quality, and service is exactly what fair competition looks like."},
+ {q:"\"Fair competition\" on a marketplace means:",o:["The platform always wins","Every seller gets a fair shot based on merit","Big brands always get priority","More sellers means lower quality"],a:1,r:"Fair competition means every seller competes on merit — price, quality, reviews — not backroom deals or platform favouritism."},
+ {q:"What is the nature of recommendations Flipkart makes to sellers?",o:["Mandatory and enforceable","Non-binding","Binding only for sellers above ₹1 crore GMV","Contractually obligatory"],a:1,r:"Non-binding. All recommendations from Flipkart to sellers are advisory only — sellers retain full autonomy over their own decisions."},
+ {q:"What does \"level playing field\" mean in the platform-seller context?",o:["All sellers get identical sales numbers","All sellers are treated under the same rules, policies, and access to platform features, without preferential treatment","Only large sellers get platform support","Sellers compete only on price"],a:1,r:"All sellers are treated under the same rules, policies, and platform access — without preferential treatment or backroom advantages."},
+ {q:"A seller complains that a competing seller is getting faster payment settlement cycles with no clear policy reason. What should the employee do?",o:["Ignore it, it's a seller issue","Investigate/escalate — differential treatment without policy basis raises fair-play concerns","Offer the same to this seller informally","Tell the seller to negotiate directly with the other seller"],a:1,r:"Investigate and escalate. Differential treatment of similarly placed sellers without a policy basis raises fair-play and level playing field concerns."},
+ {q:"What is the primary role of Flipkart in the marketplace model regarding inventory?",o:["Acting as the legal owner of all listed items","Manufacturing products to compete with sellers","Providing a platform for third-party sellers","Buying and storing products for resale"],a:2,r:"Providing a platform for third-party sellers. Flipkart does not own inventory in the marketplace model — it enables independent sellers to list and sell."},
+ {q:"Who has the ultimate authority to decide the listing price of a product on the marketplace?",o:["The independent third-party seller","The marketplace compliance department","The logistics partner delivering the item","The marketplace category management team"],a:0,r:"The independent third-party seller. Pricing autonomy rests with the seller, not Flipkart or logistics partners."},
+ {q:"Which of the following best describes a 'Level Playing Field' in a marketplace context?",o:["Charging higher fees to new or smaller sellers","Giving top-performing sellers exclusive discounts","Restricting certain sellers from using logistics","Offering services on non-discriminatory terms"],a:3,r:"Offering services on non-discriminatory terms. All sellers must have equal access to services and opportunities."},
+ {q:"How should Flipkart handle Competitively Sensitive Information (CSI) belonging to a seller?",o:["Use it to launch a marketplace-owned brand","Maintain strict confidentiality of the data","Share it with competing sellers for research","Publish the data in public marketing reports"],a:1,r:"Maintain strict confidentiality. CSI must never be shared or misused — confidentiality is key."},
+ {q:"In the context of FDI compliance, what does 'Independent Relationship' imply?",o:["Sellers are considered employees of Flipkart","Sellers and Flipkart operate as separate legal entities","The marketplace owns the seller's brand name","Flipkart manages the seller's daily operations"],a:1,r:"Sellers and Flipkart operate as separate legal entities. Sellers are independent businesses, not employees or subsidiaries of Flipkart."},
+ {q:"Which statement regarding support services (like warehousing) is compliant?",o:["Access can be denied without any valid reason","Fees should be hidden to avoid comparisons","They must be offered on an equitable basis","They are only for specific sellers"],a:2,r:"They must be offered on an equitable basis. Services must be fair, transparent, and non-discriminatory."},
+ {q:"Which action by a marketplace employee supports 'Independent Decisions' for sellers?",o:["Allowing sellers to choose their own selection","Telling a seller which courier they MUST use","Setting a mandatory minimum stock level","Restricting the seller's right to sell elsewhere"],a:0,r:"Allowing sellers to choose their own selection. Sellers must retain freedom in product selection and operations."},
+ {q:"Why is it important to respect the Competitively Sensitive Information (CSI) of sellers on the platform?",o:["To comply with random office filing rules","To help Flipkart set better market prices","To ensure one seller doesn't get too big","To prevent unfair competitive advantages"],a:3,r:"To prevent unfair competitive advantages. Protecting CSI ensures fairness and avoids misuse that could distort competition."},
+ {q:"Which body enforces competition law in India?",o:["SEBI","RBI","Competition Commission of India (CCI)","Ministry of Commerce"],a:2,r:"The Competition Commission of India (CCI) enforces the Competition Act 2002 in India."},
+ {q:"Pricing and inventory of the products is controlled by:",o:["Flipkart's category managers","A joint committee of Flipkart and sellers","The sellers themselves","Flipkart's pricing algorithm"],a:2,r:"The sellers themselves. Full control over pricing and inventory must remain with the seller."},
+ {q:"Flipkart support services to sellers should be provided:",o:["Priority to top-performing sellers","Based on the seller's subscription tier","Only to sellers on the platform for over a year","In a fair, equal, and arm's length manner to all sellers"],a:3,r:"In a fair, equal, and arm's length manner to all sellers. Support services cannot be selectively withheld or tiered in a discriminatory way."},
+ {q:"Which of the following is NOT permitted under the FDI policy?",o:["Offering support services to sellers","Making non-binding recommendations","Mandating exclusivity from sellers","Operating entities like Myntra and Cleartrip"],a:2,r:"Mandating exclusivity from sellers. Sellers must be free to list and sell on any platform."},
+ {q:"Which of these is FALSE for Flipkart?",o:["It is a marketplace","It has third-party sellers selling products","It offers support services to sellers","It can own and control seller inventory"],a:3,r:"It can own and control seller inventory — this is FALSE. Flipkart operates as a marketplace; ownership and control of inventory must remain with sellers."},
+ {q:"Must Flipkart display the name of the Seller on the product listing page?",o:["Yes, it is mandatory to do so","It's optional","No, we must not tell who the Seller is","None of the above"],a:0,r:"Yes — it is mandatory. Displaying the seller's name on the product listing page is a legal and policy requirement for transparency."},
+ {q:"If you see any prohibited conduct in a meeting, what should you do?",o:["Stay silent and ignore","Make a noisy exit","Inform Legal & Compliance","Both make a noisy exit and inform Legal & Compliance"],a:3,r:"Both make a noisy exit and inform Legal & Compliance. Exiting shows your objection; reporting ensures the conduct is properly investigated."},
+ {q:"Seller tiering is based on:",o:["Random assignment of tiers","Our relationship with sellers","Objective criteria","It is a paid service"],a:2,r:"Objective criteria. Seller tiers must be based on transparent, objective, and pre-published criteria — not on personal relationships or arbitrary decisions."},
+ {q:"One seller asks you for sales data of another seller. How do you respond?",o:["You share it","You ignore the request","You make a noisy exit and decline","You delist the seller"],a:2,r:"Make a noisy exit and decline. You must never share one seller's commercially sensitive information with another seller."},
+ {q:"You are in a situation which you think might be an antitrust concern but are not sure. Should you:",o:["Contact antitrustcompliance@flipkart.com","Ignore the concerns since you are unsure","Take written confirmation of compliance from the other person on email and move on","Write a social media post about the concern"],a:0,r:"Contact antitrustcompliance@flipkart.com. When in doubt, always escalate — the Antitrust team is there to help assess situations before they become problems."},
+ {q:"Price recommendations made to any seller are:",o:["Non-binding","Suggestive","Algorithm-led","All of the above"],a:3,r:"All of the above. Price recommendations are non-binding, suggestive, and generated by algorithms — sellers are never obligated to follow them."},
+ {q:"What's one principle of fair market behaviour?",o:["Collaborative pricing","Respecting independence","Bundling competitors","Special favours"],a:1,r:"Respecting independence. Sellers must be free to make their own business decisions without pressure or direction from the platform."},
+ {q:"A seller sees a \"suggested price\" for their product on the seller portal. This suggestion is:",o:["Just a helpful recommendation basis market research","A fixed price they must follow","A random suggestion","A mandatory rule from the government"],a:0,r:"Just a helpful recommendation based on market research. Sellers are never obligated to follow suggested prices."},
+ {q:"Which of these would be treated as an external party or third-party consultant?",o:["Tax Consultant","Audit firm","Seller's lawyers","All of the above"],a:3,r:"All of the above. Tax consultants, audit firms, and lawyers are all considered third-party externals and must be treated accordingly."}
+];
+
+const CHAPTERS=[
+ {n:'I',t:"Independence of Sellers",b:"The seller decides. Their price, their inventory, their fulfilment, their choice of platform. Every recommendation we offer is a suggestion made freely — and refused without consequence."},
+ {n:'P',t:"Pricing & Promotions",b:"A suggested price is a suggestion. Promotions reach every eligible seller at the same moment, on the same terms. No early access, no quiet advantage, no offer applied without consent."},
+ {n:'L',t:"Level Playing Field",b:"Similarly placed sellers receive similar treatment, measured against objective criteria that are published in advance. Fairness is not a favour — it is the operating condition of the marketplace."},
+ {n:'IV',t:"Speaking Up",b:"Compliance is not a department; it is a habit. When something looks wrong, the right move never changes — escalate early, escalate clearly, and never guess your way through a grey area."}
+];
+
+const BALLS_PER_INNINGS = 6;
+const KEYS = ['A','B','C','D'];
+let leaderboard = [];
+let player = null;
+let st = {};
+
+/* ─── Pool builder ───────────────────────────────────────────────────────────
+   Pages 1–100. Last digit 1–6 → scored. Last digit 0 → duck.
+   Rule: exactly 1 duck page per innings pool; 5 remaining scored pages.
+   Pool is shuffled so duck can land on any of the 6 balls.
+*/
+function buildPool() {
+  const scored = [];
+  for (let p = 1; p <= 100; p++) {
+    const d = p % 10;
+    if (d >= 1 && d <= 6) scored.push(p);
+  }
+  const ducks = [10,20,30,40,50,60,70,80,90,100];
+
+  shuffle(scored);
+  shuffle(ducks);
+
+  const pool = scored.slice(0, 5).concat(ducks.slice(0, 1));
+  return shuffle(pool);
+}
+
+/* Maps a page number to a question + chapter */
+function pageToEntry(pageNum) {
+  const lastDigit = pageNum % 10;
+  const chapter = CHAPTERS[Math.min(3, Math.floor((pageNum - 1) / 25))];
+  if (lastDigit === 0) {
+    return { page: pageNum, duck: true, chapter };
+  }
+  const qIdx = (st.qOffset + pageNum) % BANK.length;
+  return { page: pageNum, duck: false, chapter, ...BANK[qIdx] };
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = 0 | Math.random() * (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function show(name) {
+  ['login','game','result'].forEach(s => {
+    document.getElementById('scr-' + s).classList.toggle('on', s === name);
+  });
+  if (name === 'login') {
+    document.getElementById('empName').value = '';
+    document.getElementById('empEmail').value = '';
+    document.getElementById('empErr').classList.remove('on');
+    document.getElementById('emailErr').classList.remove('on');
+    setTimeout(() => document.getElementById('empName').focus(), 120);
+  }
+  if (name === 'result') renderLB('1');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const ALLOWED_DOMAINS = ['flipkart.com','myntra.com','cleartrip.com','jeeves.co.in',
+  'super.money','flipkartfinance.com','f1inforservices.com','wal-mart.com'];
+
+function startInnings() {
+  const nameEl  = document.getElementById('empName');
+  const emailEl = document.getElementById('empEmail');
+  const nameErr = document.getElementById('empErr');
+  const emailErr = document.getElementById('emailErr');
+  const name  = nameEl.value.trim();
+  const email = emailEl.value.trim().toLowerCase();
+  let valid = true;
+
+  if (name.length < 2) { nameErr.classList.add('on'); nameEl.focus(); valid = false; }
+  else nameErr.classList.remove('on');
+
+  const domain = (email.split('@')[1] || '');
+  if (!email || ALLOWED_DOMAINS.indexOf(domain) === -1) {
+    emailErr.textContent = 'Please use your company email (e.g. yourname@flipkart.com).';
+    emailErr.classList.add('on');
+    if (valid) emailEl.focus();
+    valid = false;
+  } else emailErr.classList.remove('on');
+
+  if (!valid) return;
+
+  const btn = document.querySelector('.btn-primary');
+  btn.disabled = true; btn.textContent = 'Registering…';
+
+  // Generate local player ID
+  const id = 'PL' + (Math.floor(Math.random() * 900000) + 100000);
+  player = { id, name, email };
+
+  st = {
+    pool: buildPool(),
+    qOffset: 0 | Math.random() * BANK.length,
+    runs: 0, ballsUsed: 0, wkts: 0, best: 0,
+    current: null, over: false, history: [],
+    correctPicks: 0,
+    waitingForAnswer: false
+  };
+
+  const initials = name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0,2) || 'FK';
+  document.getElementById('pbAvatar').textContent = initials;
+  document.getElementById('pbName').textContent = name;
+
+  buildWickets();
+  buildBallDots();
+  sync();
+
+  document.getElementById('bookClosed').style.display = '';
+  document.getElementById('spread').style.display = 'none';
+  document.getElementById('flipStage').classList.remove('on');
+  document.getElementById('duckView').style.display = 'none';
+  document.getElementById('questionView').style.display = '';
+  document.getElementById('spinZone').style.display = '';
+
+  const bb = document.getElementById('ballBtn');
+  bb.disabled = false;
+  bb.classList.remove('spinning');
+  document.getElementById('ballLabel').innerHTML = 'SPIN<br>THE BALL';
+
+  btn.disabled = false; btn.textContent = 'START MY INNINGS';
+  show('game');
+}
+
+function quitInnings() {
+  if (st.ballsUsed > 0 && !st.over) {
+    if (!confirm('End this innings early? Your score will still be recorded.')) return;
+    endInnings();
+  } else {
+    show('login');
+  }
+}
+
+function buildWickets() {
+  const row = document.getElementById('pitchStrip');
+  row.innerHTML = '';
+  for (let i = 0; i < 6; i++) {
+    const f = i < st.wkts ? ' fallen' : '';
+    row.innerHTML += '<div class="w-unit"><div class="stumps">' +
+      '<div class="stump s1' + f + '" id="st' + i + '0"><div class="bail b1"></div></div>' +
+      '<div class="stump s2' + f + '" id="st' + i + '1"><div class="bail b2"></div></div>' +
+      '<div class="stump s3' + f + '" id="st' + i + '2"></div></div>' +
+      '<div class="wlabel">' + (i + 1) + '</div></div>';
+  }
+}
+
+function buildBallDots() {
+  const w = document.getElementById('pbBalls');
+  w.innerHTML = '';
+  for (let i = 0; i < BALLS_PER_INNINGS; i++) w.innerHTML += '<div class="ball-dot" id="bd' + i + '"></div>';
+}
+
+function sync() {
+  const left = BALLS_PER_INNINGS - st.ballsUsed;
+  document.getElementById('sRuns').textContent  = st.runs;
+  document.getElementById('sLeft').textContent  = left;
+  document.getElementById('sWkts').textContent  = st.wkts;
+  document.getElementById('sBest').textContent  = st.best;
+  document.getElementById('spinHint').textContent = left + ' ball' + (left !== 1 ? 's' : '') + ' remaining';
+  document.getElementById('bcPages').textContent = left > 0 ? ('Spin the ball — ' + left + ' left') : 'Innings complete';
+}
+
+function popScore(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('score-pop');
+  void el.offsetWidth;
+  el.classList.add('score-pop');
+}
+
+function spinBall() {
+  const bb = document.getElementById('ballBtn');
+
+  if (st.waitingForAnswer) return;
+
+  if (st.over || st.ballsUsed >= BALLS_PER_INNINGS || st.pool.length === 0) return;
+
+  bb.classList.add('spinning');
+  bb.disabled = true;
+  document.getElementById('ballLabel').textContent = '...';
+
+  document.getElementById('spread').style.display = 'none';
+  document.getElementById('bookClosed').style.display = 'none';
+
+  setTimeout(() => {
+    bb.classList.remove('spinning');
+    const pageNum = st.pool.pop();
+    if (!pageNum) { endInnings(); return; }
+    st.current = pageToEntry(pageNum);
+    runPageFlip(pageNum, () => openPage(st.current));
+  }, 820);
+}
+
+const SHEETS = 12, GAP = 95, TURN = 420;
+function runPageFlip(targetPage, done) {
+  document.getElementById('bookClosed').style.display = 'none';
+  document.getElementById('spread').style.display = 'none';
+  const stage = document.getElementById('flipStage');
+  stage.classList.add('on');
+  document.getElementById('ballLabel').innerHTML = 'FLIP…';
+
+  const shadow = document.getElementById('flipShadow');
+  const speed  = document.getElementById('speedLines');
+  const sheets = [];
+  for (let i = 0; i < SHEETS; i++) {
+    const s = document.getElementById('fs' + i);
+    s.classList.remove('turning'); s.style.animation = 'none';
+    s.style.opacity = '0'; s.style.transform = 'rotateY(0deg)';
+    s.style.zIndex = String(SHEETS - i + 2);
+    sheets.push(s);
+  }
+  shadow.classList.remove('sweeping'); shadow.style.animation = 'none';
+  speed.classList.remove('on'); speed.style.animation = 'none';
+  void stage.offsetWidth;
+
+  sheets.forEach((s, i) => setTimeout(() => {
+    s.style.opacity = '1'; s.style.animation = ''; s.classList.add('turning');
+    if (i % 3 === 0) {
+      shadow.classList.remove('sweeping'); shadow.style.animation = ''; void shadow.offsetWidth; shadow.classList.add('sweeping');
+      speed.classList.remove('on'); speed.style.animation = ''; void speed.offsetWidth; speed.classList.add('on');
+    }
+  }, i * GAP));
+
+  const counter = document.getElementById('flipNum');
+  const totalMs = SHEETS * GAP + TURN, start = performance.now();
+  let tickTimer;
+  (function tick() {
+    const t = Math.min((performance.now() - start) / totalMs, 1);
+    if (t < 0.88) { counter.textContent = 1 + Math.floor(Math.random() * 100); tickTimer = setTimeout(tick, 26 + t * t * 200); }
+    else counter.textContent = targetPage;
+  })();
+
+  setTimeout(() => {
+    clearTimeout(tickTimer);
+    counter.textContent = targetPage;
+    stage.classList.remove('on');
+    done();
+  }, totalMs + 200);
+}
+
+function markBall(i, kind) {
+  const d = document.getElementById('bd' + i);
+  if (d) d.className = 'ball-dot used-' + kind;
+}
+
+function openPage(pg) {
+  const lastDigit = pg.page % 10;
+  document.getElementById('bookClosed').style.display = 'none';
+  const spread = document.getElementById('spread');
+  spread.style.display = '';
+  spread.classList.remove('opening'); void spread.offsetWidth; spread.classList.add('opening');
+
+  document.getElementById('chapPill').textContent = 'Chapter ' + pg.chapter.n + ' · ' + pg.chapter.t;
+  document.getElementById('chapTitle').textContent = pg.chapter.t;
+  document.getElementById('chapBody').textContent  = pg.chapter.b;
+
+  let ldText = '', ldNote = '';
+  if (lastDigit === 0) {
+    ldText = '0 — DUCK';
+    ldNote = 'Page ends in 0 — automatic duck, no question asked.';
+  } else if (lastDigit === 5) {
+    ldText = '5 runs';
+    ldNote = 'Overthrow! Answer correctly to score 5.';
+  } else if (lastDigit === 6) {
+    ldText = '6 runs';
+    ldNote = "It's a Six! Answer correctly to score 6.";
+  } else {
+    ldText = lastDigit + (lastDigit !== 1 ? ' runs' : ' run');
+    ldNote = 'Answer correctly to score ' + lastDigit + '.';
+  }
+  document.getElementById('ldVal').textContent  = ldText;
+  document.getElementById('ldNote').textContent = ldNote;
+  document.getElementById('pageNumLeft').textContent  = pg.page - 1;
+  document.getElementById('pageNumRight').textContent = pg.page;
+
+  spread.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  /* ── DUCK ── */
+  if (pg.duck) {
+    document.getElementById('questionView').style.display = 'none';
+    document.getElementById('duckView').style.display = '';
+
+    const idx = st.ballsUsed;
+    st.ballsUsed++;
+    st.wkts++;
+    markBall(idx, 'out');
+    st.history.push({ page: pg.page, runs: 0, out: true, reason: 'duck' });
+    sync();
+    popScore('sWkts');
+
+    const w = st.wkts - 1;
+    if (w < 6) [0,1,2].forEach(s => { const el = document.getElementById('st' + w + s); if (el) el.classList.add('fallen'); });
+
+    setTimeout(() => animateOut('Page ends in 0 — a duck!'), 450);
+
+    if (st.ballsUsed >= BALLS_PER_INNINGS) {
+      setTimeout(endInnings, 2800);
+    } else {
+      setTimeout(() => {
+        document.getElementById('ballBtn').disabled = false;
+        document.getElementById('ballLabel').innerHTML = 'NEXT<br>BALL →';
+      }, 2200);
+    }
+    return;
+  }
+
+  /* ── QUESTION ── */
+  document.getElementById('duckView').style.display = 'none';
+  document.getElementById('questionView').style.display = '';
+  document.getElementById('qLabel').textContent = 'Question · Page ' + pg.page;
+  document.getElementById('qText').textContent  = pg.q;
+  document.getElementById('ruleNote').style.display = 'none';
+  document.getElementById('opts').innerHTML = pg.o.map((o, i) =>
+    '<button class="opt" id="op' + i + '" onclick="answer(' + i + ')"><div class="opt-key">' + KEYS[i] + '</div><span>' + o + '</span></button>'
+  ).join('');
+
+  st.waitingForAnswer = true;
+  document.getElementById('ballBtn').disabled = true;
+  document.getElementById('ballLabel').innerHTML = 'ANSWER<br>FIRST';
+}
+
+function answer(sel) {
+  const pg = st.current;
+  const lastDigit = pg.page % 10;
+  const correct   = sel === pg.a;
+
+  document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+  document.getElementById('op' + sel).classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.getElementById('op' + pg.a).classList.add('correct');
+
+  const rn = document.getElementById('ruleNote');
+  rn.className = 'rule-note ' + (correct ? 'rule-ok' : 'rule-no');
+  document.getElementById('ruleText').textContent = pg.r;
+  rn.style.display = 'block';
+
+  const idx = st.ballsUsed;
+  st.ballsUsed++;
+  st.waitingForAnswer = false;
+
+  if (correct) {
+    st.correctPicks = (st.correctPicks || 0) + 1;
+    st.runs += lastDigit;
+    if (lastDigit > st.best) st.best = lastDigit;
+    markBall(idx, 'run');
+    st.history.push({ page: pg.page, runs: lastDigit, out: false });
+    sync(); popScore('sRuns'); popScore('sBest');
+    animateBatSwing(lastDigit);
+  } else {
+    st.wkts++;
+    markBall(idx, 'out');
+    st.history.push({ page: pg.page, runs: 0, out: true, reason: 'wrong' });
+    sync(); popScore('sWkts');
+    animateOut('Wrong answer — clean bowled!');
+    const w = st.wkts - 1;
+    if (w < 6) [0,1,2].forEach(s => { const el = document.getElementById('st' + w + s); if (el) el.classList.add('fallen'); });
+  }
+
+  if (st.ballsUsed >= BALLS_PER_INNINGS) {
+    setTimeout(endInnings, 2400);
+  } else {
+    setTimeout(() => {
+      document.getElementById('ballBtn').disabled = false;
+      document.getElementById('ballLabel').innerHTML = 'NEXT<br>BALL →';
+    }, 1800);
+  }
+}
+
+function endInnings() {
+  if (st.over) return;
+  st.over = true;
+
+  // Background Post directly to Google Forms
+  var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse";
+  var formData = new FormData();
+  formData.append("entry.339170365",  player.id);
+  formData.append("entry.2115079706", player.name);
+  formData.append("entry.1651368544", player.email);
+  formData.append("entry.529639327",  st.runs);
+  formData.append("entry.64138176",   st.ballsUsed);
+  formData.append("entry.839072272",  st.wkts);
+  formData.append("entry.1786458713", st.best);
+
+  fetch(formUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  }).then(function() {
+    console.log("Response recorded on Google Form.");
+  }).catch(function(err) {
+    console.error("Form post failed:", err);
+  });
+
+  const existing = leaderboard.find(e => e.id === player.id);
+  const entry = { id: player.id, name: player.name, email: player.email,
+                  runs: st.runs, balls: st.ballsUsed, wkts: st.wkts, best: st.best, when: Date.now() };
+  if (existing) { if (st.runs > existing.runs) Object.assign(existing, entry); }
+  else leaderboard.push(entry);
+  leaderboard.sort((a, b) => b.runs - a.runs || a.balls - b.balls);
+
+  document.getElementById('goPlayer').textContent = player.name;
+  document.getElementById('goRuns').innerHTML = '<span>' + st.runs + '</span> RUNS';
+  document.getElementById('goStats').textContent =
+    st.ballsUsed + ' balls · ' + st.wkts + ' wicket' + (st.wkts !== 1 ? 's' : '') + ' · best hit ' + st.best;
+
+  const rank = leaderboard.findIndex(e => e.id === player.id) + 1;
+  let v;
+  if (st.runs >= 25)      v = 'Match-winning innings! Independence, Pricing and Level Playing Field are second nature to you.';
+  else if (st.runs >= 16) v = 'Strong knock. Good compliance instincts — a couple of loose shots cost you wickets.';
+  else if (st.runs >= 8)  v = 'Steady innings. Revisit seller independence and pricing autonomy to lift your strike rate.';
+  else                    v = 'Back to the nets! Study the Flipkart Ethics & Compliance rule book before your next innings.';
+  document.getElementById('goVerdict').textContent = v + '  You are currently ranked #' + rank + ' of ' + leaderboard.length + '.';
+
+  renderLB('1');
+  show('result');
+}
+
+function renderLB(suffix) {
+  const list  = document.getElementById('lbList'  + suffix);
+  const count = document.getElementById('lbCount' + suffix);
+  count.textContent = leaderboard.length + ' player' + (leaderboard.length !== 1 ? 's' : '');
+  if (!leaderboard.length) {
+    list.innerHTML = '<div class="lb-empty">No innings played yet. Be the first on the board!</div>';
+    return;
+  }
+  list.innerHTML = leaderboard.slice(0, 10).map((e, i) => {
+    const me = player && (e.email === player.email || e.id === player.id) ? ' me' : '';
+    return '<div class="lb-row' + me + '"><div class="lb-rank">' + (i + 1) + '</div>' +
+      '<div class="lb-who"><div class="lb-nm">' + esc(e.name) + '</div><div class="lb-eid">' + esc(e.email || e.id) + '</div></div>' +
+      '<div class="lb-sc">' + e.runs + '<small>' + e.balls + ' balls</small></div></div>';
+  }).join('');
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────────────────── */
+const canvas = document.getElementById('fxCanvas');
+const ctx    = canvas.getContext('2d');
+let raf = null;
+function resizeFX() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeFX); resizeFX();
+const CCOLS = ['#FFE11B','#F9B72B','#2874F0','#4D94FF','#FFFFFF','#FFC200'];
+
+function animateBatSwing(runs) {
+  const scene = document.getElementById('swingScene');
+  const bat   = document.getElementById('batGroup');
+  scene.style.animation = 'none'; scene.style.opacity = '0'; void scene.offsetWidth;
+  scene.style.animation = 'swingShow 2.0s ease forwards';
+  bat.style.animation = 'none'; void bat.offsetWidth;
+  bat.style.animation = 'batSwing .75s cubic-bezier(.3,.05,.3,1) forwards';
+
+  resizeFX(); if (raf) cancelAnimationFrame(raf);
+  const W = canvas.width, H = canvas.height, CX = W / 2, CY = H / 2;
+  const svgW = Math.min(520, window.innerWidth * .88), scale = svgW / 400;
+  const BX = CX + (150 - 200) * scale, BY = CY + (200 - 130) * scale;
+  const TX = W * 0.94, TY = H * 0.06;
+
+  let ballLive = false;
+  setTimeout(() => { ballLive = true; }, 330);
+
+  const sparks = [], conf = [];
+  const bursts = Math.max(2, Math.min(4, Math.ceil(runs / 2)));
+  for (let i = 0; i < runs * 22 + 50; i++) {
+    conf.push({ x: W*.18 + Math.random()*W*.64, y: -20 - Math.random()*230, w: 5 + Math.random()*10, h: 3 + Math.random()*6,
+      col: CCOLS[0|Math.random()*CCOLS.length], vx: (Math.random()-.5)*5, vy: 2.5 + Math.random()*5,
+      rot: Math.random()*Math.PI*2, rv: (Math.random()-.5)*.2 });
+  }
+  for (let b = 0; b < bursts; b++) {
+    setTimeout(() => {
+      const bx = W*(.28+Math.random()*.46), by = H*(.05+Math.random()*.4);
+      for (let i = 0; i < 56; i++) {
+        const ang = Math.random()*Math.PI*2, sp = 2+Math.random()*7.5;
+        sparks.push({ x:bx, y:by, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp, r:2+Math.random()*3.4,
+          hue:[52,44,214,200][b%4]+(Math.random()-.5)*24, life:1, decay:.015+Math.random()*.02 });
+      }
+    }, 700 + b * 220);
+  }
+
+  let prog = 0, frame = 0;
+  (function draw() {
+    ctx.clearRect(0, 0, W, H);
+    if (ballLive && prog < 1) {
+      prog = Math.min(prog + 0.021, 1);
+      const t = prog;
+      const bx = BX + (TX-BX)*t, by = BY + (TY-BY)*t - Math.sin(t*Math.PI)*H*0.42;
+      for (let k = 1; k <= 6; k++) {
+        const tp = Math.max(0, t - k*0.033);
+        const px = BX+(TX-BX)*tp, py = BY+(TY-BY)*tp - Math.sin(tp*Math.PI)*H*0.42;
+        ctx.save(); ctx.globalAlpha = 0.15*(1-k/7); ctx.fillStyle = '#FFE11B';
+        ctx.beginPath(); ctx.arc(px, py, 10-k*1.1, 0, Math.PI*2); ctx.fill(); ctx.restore();
+      }
+      const g = ctx.createRadialGradient(bx,by,0,bx,by,28);
+      g.addColorStop(0,'rgba(255,225,27,.32)'); g.addColorStop(1,'rgba(255,225,27,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(bx,by,28,0,Math.PI*2); ctx.fill();
+      const bg = ctx.createRadialGradient(bx-4,by-4,1,bx,by,12);
+      bg.addColorStop(0,'#FF5A4A'); bg.addColorStop(1,'#7B1C16');
+      ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(bx,by,10,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(bx,by,7,.3,Math.PI+.3); ctx.stroke();
+    }
+    sparks.forEach(s => { s.x+=s.vx; s.y+=s.vy; s.vy+=.11; s.life-=s.decay; s.vx*=.97;
+      if (s.life > 0) { ctx.save(); ctx.globalAlpha=s.life; ctx.fillStyle='hsl('+s.hue+',100%,64%)';
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r*s.life,0,Math.PI*2); ctx.fill(); ctx.restore(); }});
+    if (frame > 32) {
+      conf.forEach(c => { c.x+=c.vx; c.y+=c.vy; c.rot+=c.rv;
+        const life = Math.max(0, 1-(frame-32)/98);
+        ctx.save(); ctx.translate(c.x+c.w/2, c.y+c.h/2); ctx.rotate(c.rot);
+        ctx.globalAlpha = life*.92; ctx.fillStyle = c.col; ctx.fillRect(-c.w/2,-c.h/2,c.w,c.h); ctx.restore(); });
+    }
+    frame++;
+    if (frame < 152) raf = requestAnimationFrame(draw); else ctx.clearRect(0,0,W,H);
+  })();
+
+  setTimeout(() => {
+    const ov = document.getElementById('runOverlay');
+    document.getElementById('runWord').textContent  = runs;
+    document.getElementById('runLabel').textContent = runs === 1 ? 'RUN' : 'RUNS';
+    const tags = { 1:'Quick single — pushed to the leg side!', 2:'Comfortable two — good running!',
+      3:'Driven into the gap for three!', 4:'FOUR! Races away to the rope!',
+      5:'Overthrow! Five runs!', 6:'SIX! Into the crowd!' };
+    document.getElementById('runTag').textContent = tags[runs] || 'Runs on the board!';
+    ov.style.animation = 'none'; ov.style.opacity = '0'; void ov.offsetWidth;
+    ov.style.animation = 'runIn 1.6s cubic-bezier(.22,.61,.36,1) forwards';
+    setTimeout(() => { ov.style.opacity = '0'; }, 1700);
+  }, 430);
+}
+
+function animateOut(reason) {
+  document.getElementById('outSub').textContent = reason;
+  const ov = document.getElementById('outOverlay');
+  ov.style.animation = 'none'; ov.style.opacity = '0'; void ov.offsetWidth;
+  ov.style.animation = 'outIn 2.0s ease forwards';
+
+  resizeFX(); if (raf) cancelAnimationFrame(raf);
+  const W = canvas.width, H = canvas.height, CX = W/2, CY = H*.6;
+  const pieces = [], rs = [];
+  for (let i = 0; i < 28; i++) {
+    const ang = -Math.PI/2 + (Math.random()-.5)*Math.PI*1.9, sp = 4+Math.random()*11;
+    pieces.push({ x:CX, y:CY, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp-5, w:16+Math.random()*24, h:4+Math.random()*5,
+      rot:Math.random()*Math.PI*2, rv:(Math.random()-.5)*.38, col:Math.random()>.45?'#FFE11B':'#F9B72B' });
+  }
+  for (let i = 0; i < 64; i++) {
+    const ang = Math.random()*Math.PI*2, sp = 2.5+Math.random()*7.5;
+    rs.push({ x:CX, y:CY, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp, r:2+Math.random()*4, life:1, decay:.018+Math.random()*.026 });
+  }
+  let frame = 0;
+  (function draw() {
+    ctx.clearRect(0,0,W,H);
+    if (frame < 12) { ctx.fillStyle='rgba(224,43,43,'+(.22*(1-frame/12))+')'; ctx.fillRect(0,0,W,H); }
+    pieces.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=.24; p.vx*=.97; p.rot+=p.rv;
+      const life = Math.max(0,1-frame/72);
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.globalAlpha=life;
+      ctx.fillStyle=p.col; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); });
+    rs.forEach(s => { s.x+=s.vx; s.y+=s.vy; s.vy+=.1; s.life-=s.decay;
+      if (s.life > 0) { ctx.save(); ctx.globalAlpha=s.life; ctx.fillStyle='#FF4444';
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r*s.life,0,Math.PI*2); ctx.fill(); ctx.restore(); }});
+    frame++;
+    if (frame < 105) raf = requestAnimationFrame(draw); else ctx.clearRect(0,0,W,H);
+  })();
+  setTimeout(() => { ov.style.opacity = '0'; }, 2100);
+}
+
+</script>
+</body>
+</html>
