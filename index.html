@@ -343,8 +343,7 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 .btn-primary:active{transform:translateY(1px);box-shadow:0 3px 12px rgba(255,225,27,.35);}
 
 .logo-bar{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 0}
-.logo-fk{height:26px;width:auto;border-radius:6px}
-.logo-mn{height:22px;width:auto}
+.logo-fk{height:54px;width:auto;max-width:92%;object-fit:contain;border-radius:8px;display:block;margin:0 auto}
 </style>
 </head>
 <body>
@@ -383,7 +382,7 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
     <defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#B98A3E" stop-opacity=".55"/>
       <stop offset=".5" stop-color="#B98A3E" stop-opacity="0"/>
-      <stop offset="1" stop-color="#B98A3E" stop-opacity=".55"/></linearGradient></defs>
+      <stop offset="1" stop-color="#B98A3E" stop-opacity="0.55"/></linearGradient></defs>
   </svg>
 </div>
 
@@ -399,7 +398,9 @@ canvas.fx{position:fixed;inset:0;z-index:90;pointer-events:none}
 
 <div class="app">
 
-  <div class="logo-bar"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+YAAAFECAYAAACqKyTrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAKApSURBVHhe7N11eFPXGwfw743UvbgVd3e2wQRmbMx9+405c3dnPubuLsx9jAkwtuHuLgUKlLo3TXLP748kJdwmN+feJk0L38/z5Nl406aRm3vPe857zlGEECAiIiIiIiKiKGJiTkRERERERBRFTMyJiIiIiIiIooiJOREREREREVEUMTEnIiIiIiIiiiIm5kRERERERERRxMSciIiIiIiIKIqYmBMRERERERFFERNzIiIiIiIioihiYk5EREREREQURUzMiYiIiIiIiKKIiTkRERERERFRFDExJyIiIiIiIooiJOREREREREVEUMTEnIiIiIiIiiiIm5kRERERERERRxMSciIiIiIiIKIqYmBMRERERERFFERNzIiIiIiIioihiYk5EREREREQURUzMiYiIiIiIiKKIiTkRERERERFRFDExJyIiIiIiIooiJQihjR1IlLVBbtscbdiQ+POA1Le1UZKmAsIJwAUIN6Bo76fGw+q5KXbv/xMRERER0UGj+HKg+mtt1JjMGWfCPuw7/xAT80ZFoDbrVvMA5zLAuQJwbwTcewBRCogKT3JOjYoQAoqiAEoSYEmCsDSDYu0K2AcA9iGAtYPvJ73/Ze8KEREREVGTw8T8YOaXrLk3AZXvAVXfAWqRZ5QcbkAogGKr/dlQHxs1JAFF8XwmimLxfF5QPTNFFDuAOMB+JJB4BRA72juS7tcJQ0RERERETQMT84OVAEQJ4PgXqP4ScEz3lq0LADYAKoRQoUDR5HEhPjdqYL4Px/9zsXjjbm8ebveMnsefD8QeC1hbs9ydiIiIiKgpiVBizsXfokZ4Eraav4HiSRAl1wPVv0KoNd7czpvQQYWiAFCE93d8N2pctJ+L4v236v2n4ql+cC4ESu8ASq4Eqr70fsb8PImIiIiIDmVMzKNFuIGyx4DCc4Dq6VBEqV8SjgCJHjUtdTtRBAAhVAAuiJq5QMkkiKILAffeA36TiIiIiIgOLUwMG5R3BNW1Dii5CKh4DkK4vPd5R1Zrf44OLgIKhLfTRfX8P2xQHNOA4vMAx6w6iTwRERERER0amJg3GG/C5VwAlFwFUTUdgAWKovrNHWdSdrDzXyZAwO1ZxM+5AqLkaqDyI7/1BYiIiIiI6FDBxLxBCE9K5lwOFJ0P1KyBArff0uocKT0U7U/SVSgiHyi9C6j6uDZGRERERESHBq7K3iBUwLkIKDoHUEsBCM9K64pvgTA6dCkQEJ4kXbEBSjKQ8iIQdxq3U2vkistcWLGxBDn7qlFa4UJivBUtM2LRqlksendOhs16cH5+y9aXIntPpTasKynBhnEjmmnDRERERE1PhFZlZ2LeEJwrgdLrAOca70goR8jpQJ6aCgUCFiiWZCDlOSDubO2PkY65K4pw1aMrtOGQ7rmsGy4c31YbDmrh6mI8/+kW/L24YH/Ri0arZrG4aHw7TDorCymJNu3dTdr59yzFzIX52rCu0YMy8M2zQ7VhoqhxucVB23lGREQRxsS8KVI9swUKz4Zw/AVFUfePjhJp7P8m2qBY2wFpUwF7r0Y14yS3wIEqR/TK7FOSbMhIsWvDAIB3v9+B+15drw2H9OXTQ3DU0ExtOKDPpuXg1ufWaMNBDeuThq+mDEFC3MGzX/3QC/7BztxqbVjXZae1x5M39NKGiSKmpNyFeSuLsHB1EXbsrcKu3CrsznOgosqFymo3VBWwWICEOCsS421ISbShXcs4ZLVOQFbrePTqlIwhvVMPuo41IiIKAybmTZEbKH/Osy2acuCyX0R1+Y4R7xSHuNOB1DcAJa7RlLWPnTQPqzeXacMN5pFre2DSmVnaMADgzhfX4aOfd2rDIS2dOgZtW8Rpw3Us31CKCTctQI3T2Pf3pgs64d7Lu2nDTVJltRudTpqhDYf01I29cOmp7bVhorCprHZj4epo/LusEP8tK8CKjaVBK1qM6JGViGOGN8NZ49qgb9dk7d1ERERERETU2I2EBy4R9q3fBi38L1v39/4/4X4k3f8/4f7E3f053N94iIn5ISb3LpM0EREREREREUXN/wO2fJg0QfWvggAAAABJRU5ErkJggg==" style="height:52px;width:auto;object-fit:contain;border-radius:8px;display:block;margin:0 auto;" alt="Flipkart Group Ethics &amp; Compliance"></div>
+  <div class="logo-bar">
+    <img src="FK%20Ethincs%20logo.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/flipkart-atfdi/bookcricket/main/FK%20Ethincs%20logo.png'" class="logo-fk" alt="Flipkart Group Ethics &amp; Compliance">
+  </div>
 
   <div class="screen on" id="scr-login">
     <header class="hdr">
@@ -622,11 +623,31 @@ let leaderboard = [];
 let player = null;
 let st = {};
 
-/* ─── Pool builder ───────────────────────────────────────────────────────────
-   Pages 1–100. Last digit 1–6 → scored. Last digit 0 → duck.
-   Rule: exactly 1 duck page per innings pool; 5 remaining scored pages.
-   Pool is shuffled so duck can land on any of the 6 balls.
-*/
+/* Helper function to post responses to Google Form */
+function postToGoogleForm(runs, balls, wkts, best) {
+  if (!player) return;
+  var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse";
+  var formData = new FormData();
+  formData.append("entry.339170365",  player.id);
+  formData.append("entry.2115079706", player.name);
+  formData.append("entry.1651368544", player.email);
+  formData.append("entry.529639327",  runs);
+  formData.append("entry.64138176",   balls);
+  formData.append("entry.839072272",  wkts);
+  formData.append("entry.1786458713", best);
+
+  fetch(formUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  }).then(function() {
+    console.log("Response recorded on Google Form (" + (balls === 0 ? "Initial/In-Progress" : "Completed") + ").");
+  }).catch(function(err) {
+    console.error("Form post failed:", err);
+  });
+}
+
+/* Pool builder: 5 scored pages (1-6) and 1 duck page (0) */
 function buildPool() {
   const scored = [];
   for (let p = 1; p <= 100; p++) {
@@ -642,7 +663,6 @@ function buildPool() {
   return shuffle(pool);
 }
 
-/* Maps a page number to a question + chapter */
 function pageToEntry(pageNum) {
   const lastDigit = pageNum % 10;
   const chapter = CHAPTERS[Math.min(3, Math.floor((pageNum - 1) / 25))];
@@ -704,9 +724,11 @@ function startInnings() {
   const btn = document.querySelector('.btn-primary');
   btn.disabled = true; btn.textContent = 'Registering…';
 
-  // Generate local player ID
   const id = 'PL' + (Math.floor(Math.random() * 900000) + 100000);
   player = { id, name, email };
+
+  /* INSTANT CAPTURE: Log registration immediately so user data is not lost if they drop midway */
+  postToGoogleForm(0, 0, 0, 0);
 
   st = {
     pool: buildPool(),
@@ -987,26 +1009,8 @@ function endInnings() {
   if (st.over) return;
   st.over = true;
 
-  // Background Post directly to Google Forms
-  var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfblT08JcLtLrUo8R65It9-zag28sdMj-mlsJCQ9rUeNx4sRg/formResponse";
-  var formData = new FormData();
-  formData.append("entry.339170365",  player.id);
-  formData.append("entry.2115079706", player.name);
-  formData.append("entry.1651368544", player.email);
-  formData.append("entry.529639327",  st.runs);
-  formData.append("entry.64138176",   st.ballsUsed);
-  formData.append("entry.839072272",  st.wkts);
-  formData.append("entry.1786458713", st.best);
-
-  fetch(formUrl, {
-    method: "POST",
-    mode: "no-cors",
-    body: formData
-  }).then(function() {
-    console.log("Response recorded on Google Form.");
-  }).catch(function(err) {
-    console.error("Form post failed:", err);
-  });
+  /* FINAL CAPTURE: Send full completed statistics */
+  postToGoogleForm(st.runs, st.ballsUsed, st.wkts, st.best);
 
   const existing = leaderboard.find(e => e.id === player.id);
   const entry = { id: player.id, name: player.name, email: player.email,
